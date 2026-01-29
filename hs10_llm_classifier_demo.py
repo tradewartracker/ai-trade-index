@@ -189,6 +189,117 @@ def classify_batch(codes_and_descriptions: list,
     return pd.DataFrame(results)
 
 
+def resume_batch_classification(
+    all_codes_file: str,
+    checkpoint_file: str,
+    code_column: str = 'hs10_code',
+    description_column: str = 'description',
+    output_file: Optional[str] = None,
+    delay: float = 0.5
+) -> pd.DataFrame:
+    """
+    Resume batch classification by skipping already-processed codes.
+    Handles crashes gracefully by reading from checkpoint file.
+    
+    Parameters
+    ----------
+    all_codes_file : str
+        CSV file with all HS10 codes to classify
+    checkpoint_file : str
+        CSV file with partially completed results (will be created if doesn't exist)
+    code_column : str
+        Column name for HS10 codes (default: 'hs10_code')
+    description_column : str
+        Column name for descriptions (default: 'description')
+    output_file : str, optional
+        Final output file (default: same as checkpoint_file)
+    delay : float
+        Seconds between API calls (default: 0.5)
+    
+    Returns
+    -------
+    pd.DataFrame
+        Combined results (old + new)
+        
+    Example
+    -------
+    >>> results = resume_batch_classification(
+    ...     all_codes_file='unique_hs10_commodities.csv',
+    ...     checkpoint_file='hs10_classification_progress.csv',
+    ...     output_file='hs10_classification_final.csv'
+    ... )
+    """
+    import os
+    
+    if output_file is None:
+        output_file = checkpoint_file
+    
+    # Load all codes
+    print(f"Loading all codes from: {all_codes_file}")
+    all_codes_df = pd.read_csv(all_codes_file)
+    print(f"Total codes to classify: {len(all_codes_df):,}")
+    
+    # Check if checkpoint exists
+    if os.path.exists(checkpoint_file):
+        print(f"\nFound checkpoint file: {checkpoint_file}")
+        completed_df = pd.read_csv(checkpoint_file)
+        print(f"Total rows in checkpoint: {len(completed_df):,} codes")
+        
+        # Filter out error rows - these should be retried
+        error_rows = completed_df[completed_df['relevance'] == 'Error']
+        success_rows = completed_df[completed_df['relevance'] != 'Error']
+        
+        if len(error_rows) > 0:
+            print(f"Found {len(error_rows):,} error rows (will be retried)")
+        print(f"Successfully completed: {len(success_rows):,} codes")
+        
+        # Only skip successfully completed codes
+        completed_codes = set(success_rows['hs10_code'].astype(str))
+        remaining_df = all_codes_df[~all_codes_df[code_column].astype(str).isin(completed_codes)]
+        print(f"Remaining to classify: {len(remaining_df):,} codes")
+        
+        # Keep only successful results for final output
+        completed_df = success_rows
+    else:
+        print(f"\nNo checkpoint file found. Starting fresh.")
+        remaining_df = all_codes_df
+        completed_df = pd.DataFrame()
+    
+    # If nothing left to do
+    if len(remaining_df) == 0:
+        print("\n✅ All codes already classified!")
+        return completed_df
+    
+    # Prepare remaining codes
+    codes_and_descriptions = list(zip(
+        remaining_df[code_column].astype(str),
+        remaining_df[description_column].astype(str)
+    ))
+    
+    print(f"\n🚀 Starting classification of {len(codes_and_descriptions):,} remaining codes...")
+    print(f"Progress will be saved to: {checkpoint_file}")
+    
+    # Classify remaining codes
+    new_results_df = classify_batch(
+        codes_and_descriptions,
+        delay=delay,
+        checkpoint_file=checkpoint_file
+    )
+    
+    # Combine with previous results
+    if len(completed_df) > 0:
+        final_df = pd.concat([completed_df, new_results_df], ignore_index=True)
+    else:
+        final_df = new_results_df
+    
+    # Save final results
+    final_df.to_csv(output_file, index=False)
+    print(f"\n✅ Complete! Final results saved to: {output_file}")
+    print(f"Total classified: {len(final_df):,} codes")
+    
+    return final_df
+
+
 # =============================================================================
 # DEMO: TEST WITH SAMPLE CODES
 # =============================================================================
