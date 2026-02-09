@@ -151,13 +151,67 @@ Keywords: Tariffs, U.S. Trade Policy, Trade Restrictiveness Index
 
 \subsection*{Introduction}
 
+%https://www.bloomberg.com/news/articles/2026-02-06/how-much-is-big-tech-spending-on-ai-computing-a-staggering-650-billion-in-2026
+%
+%https://www.axios.com/2026/02/06/amazon-microsoft-meta-ai-investment
+%
+%the GDP contribution depends on how much imported content there is .
+
+%https://www.wsj.com/tech/ai/ai-spending-tech-companies-compared-02b90046?mod=livecoverage_web
+
+%https://www.goldmansachs.com/insights/articles/why-ai-companies-may-invest-more-than-500-billion-in-2026
+
+%Goldman Sachs
+%2026 projections ($527B hyperscaler capex, $1.15T for 2025-2027):
+%https://www.goldmansachs.com/insights/articles/why-ai-companies-may-invest-more-than-500-billion-in-2026
+
+%$1 trillion investment by 2027, $5 trillion for infrastructure:
+%https://pwm.gs.com/nam/en-us/insights/markets-and-investing/innovation-technology/the-building-blocks-behind-ai-next-wave
+
+%$1.4 trillion for 2025-2027 (includes breakdown by company):
+%https://www.goldmansachs.com/what-we-do/investment-banking/insights/articles/powering-the-ai-era/report.pdf
+
+%$200 billion globally by 2025 (earlier 2023 estimate):
+%https://www.goldmansachs.com/insights/articles/ai-investment-forecast-to-approach-200-billion-globally-by-2025
+%Technology sector outlook with capex estimates:
+
+%https://am.gs.com/en-ae/advisors/insights/article/2025/technology-in-2025-the-cycle-rolls-on
+
+%S&P Global
+%$61 billion data center deals in 2025, $600B 2026 hyperscaler capex:
+%https://www.cnbc.com/2025/12/19/data-center-deals-hit-record-amid-ai-funding-concerns-grip-investors.html
+%80% of US private demand growth from AI infrastructure:
+%https://www.spglobal.com/en/research-insights/special-reports/look-forward/data-center-investment-moves-macro-needle
+%~40% increase to $600B in 2026:
+%https://www.ciodive.com/news/ai-boost-cloud-spending/810399/
+%$450 billion in transactions over 5 years:
+%https://www.spglobal.com/en/research-insights/special-reports/look-forward/data-center-frontiers/data-center-risk-if-ai-promises-fade
+%McKinsey & Company
+%$6.7 trillion total, $5.2 trillion for AI infrastructure by 2030:
+%https://www.mckinsey.com/industries/technology-media-and-telecommunications/our-insights/the-cost-of-compute-a-7-trillion-dollar-race-to-scale-data-centers
+%Bloomberg/Major Financial Press
+%$3 trillion total buildout, recent company guidance:
+%https://www.bloomberg.com/news/articles/2026-02-02/the-3-trillion-ai-data-center-build-out-spurs-a-debt-market-boom
+%$600B+ for 2026 (Big Five hyperscalers):
+%https://techblog.comsoc.org/2025/12/22/hyperscaler-capex-600-bn-in-2026-a-36-increase-over-2025-while-global-spending-on-cloud-infrastructure-services-skyrockets/
+%$650 billion 2026 estimate (Amazon $200B, Alphabet $175-185B, etc.):
+%https://finance.yahoo.com/news/big-tech-set-to-spend-650-billion-in-2026-as-ai-investments-soar-163907630.html
+%Big Tech $380 billion spending in 2025:
+%https://www.cnbc.com/2025/12/24/ai-infrastructure-stocks-lumentum-celestica-seagate-beat-nvidia-2025.html
+%Additional High-Quality Sources
+%KKR analysis ($7 trillion McKinsey estimate cited):
+%https://www.kkr.com/insights/ai-infrastructure
+%JLL global data center report ($3 trillion over 5 years):
+%https://www.jll.com/en-us/newsroom/global-data-center-sector-to-nearly-double-to-200gw-amid-ai-infrastructure-boom
+%PBS NewsHour interview with NYT reporter on AI spending:
+%https://www.pbs.org/newshour/show/whats-next-for-ai-and-has-its-explosive-growth-in-2025-created-a-bubble
 
 
 \section{Classifying AI-Related Products}\label{sec:measurment}
 
 This section describes how I classify internationally traded commodities that are plausibly used to build and operate AI-focused data centers | hyperscale facilities where GPU servers, high-speed networking, and high-density power and cooling are inputs. The measurement question is: which traded goods plausibly enter AI data-center construction and equipment and operations and maintenance?
 
-I treat this as a classification problem and use a large language model (LLM) to systematically label the universe of HS10 commodity codes (about 19,000) by their relevance to AI data-center infrastructure. There are several nice examples of using LLMs for classification purposes in economics. For example, \citet{clayton2025geoeconomic} develop measures of ``geoeconomic pressure'' by using the LLM to read earnings calls and classify which governments apply pressure, to whom, and how. Similarly, \citet{lagakos2025american} use LLMs to extract systematic information from individuals' life narratives on important life junctures, sources of meaning, and overall life satisfaction. The methodological idea is the same | provide the LLM a list of HS10 commodity descriptions and then ask systematic questions about the relevance and possible use of the product in AI.
+I treat this as a classification problem and use a large language model (LLM) to systematically label the universe of HS10 commodity codes (about 19,000) by their relevance to AI data-center infrastructure. There are several nice examples of using LLMs for classification purposes in economics. For example, \citet{clayton2025geoeconomic} develop measures of ``geoeconomic pressure'' by using the LLM to read earnings calls and classify which governments apply pressure, to whom, and how. Similarly, \citet{lagakos2025american} use LLMs to extract systematic information from individuals' life narratives on sources of meaning and overall life satisfaction. The methodological idea is the same | provide the LLM a list of HS10 commodity descriptions and then ask systematic questions about the relevance and possible use of the product in AI.
 
 \subsection{Data}
 
@@ -175,12 +229,12 @@ The classification procedure requires specifying both a categorization scheme an
     \item \textbf{Medium}: Products with plausible data center applications but also significant non-data-center uses, or indirect inputs to data center materials
     \item \textbf{Low}: Products with no apparent connection to data center construction
 \end{itemize}
-In baseline results I focus on products classified as \textbf{High}; \textbf{Medium} only enters robustness/upper bounds.
+In the baseline results, I focus on products classified as \textbf{High}. I only treat \textbf{Medium}-rated products for robustness considerations.
 
 In addition to this categorization, I also ask the model to provide a confidence score, a use category within which the product might be used, and finally, a natural language explanation of the classification decision. These additional outputs provide me an ability to ex-post scrutinize the classification. So, for each HS10 code $i$ with description $d_i$, I prompt the model to return a structured classification object:
-\begin{equation}
+\begin{align*}
     C_i = \{\texttt{relevance}_i, \ \texttt{confidence}_i, \ \texttt{category}_i, \ \texttt{reasoning}_i\}
-\end{equation}
+\end{align*}
 \noindent where:
 \begin{itemize}
     \item $\texttt{relevance}_i \in \{\text{\textbf{High}}, \text{\textbf{Medium}}, \text{\textbf{Low}}\}$ is constrained by an enumerated type,
@@ -188,7 +242,7 @@ In addition to this categorization, I also ask the model to provide a confidence
     \item $\texttt{category}_i$ maps to one of nine predefined categories (Compute Hardware, Networking/Telecom, Cooling/HVAC, Electrical/Power, Building Structure, Fire Safety/Security, Specialty Materials, Maintenance/Operations, Not DC Related),
     \item $\texttt{reasoning}_i$ provides a natural language explanation of the classification decision.
 \end{itemize}
-The schema enforcement ensures that every response contains valid values for all fields. The model cannot return ``Medium-High'' or ``Moderate''---only the three specified relevance levels. The structured approach facilitates systematic analysis and comparison across different LLM models.
+The schema enforcement ensures that every response contains valid values for all fields. The model cannot return ``Medium-High'' or ``Moderate'', etc. It will only the three specified relevance levels. The structured approach also facilitates systematic analysis and the comparison of outputs across different LLM models.
 
 An important input is the prompt to the LLM. The prompt provides context on AI data center construction, describing the categories of relevant products, and other related information. The prompt also ensures that the output is structured according to the schema described above. The complete prompt is presented in the appendix, but the first snippet is the following:
 \begin{prompt}
@@ -198,7 +252,7 @@ An important input is the prompt to the LLM. The prompt provides context on AI d
 \end{prompt}
 In addition to this prompt, it also instructs the model to consider edge cases explicitly. For example, products like diesel engines could be relevant (for generators) or irrelevant (for vehicles), and that context from the HS code description should guide the determination.
 
-I employ Claude (Anthropic) as my main classification model, using the tool-calling API to obtain structured responses.\footnote{I use the \texttt{claude-sonnet-4-20250514} model. Results are robust to using alternative frontier models; see Appendix \ref{app:robustness}.} I set the temperature... I process all 19,424 HS10 codes through the classification API with rate limiting to respect API constraints. Processing all codes required about a day and a half at a total cost of approximately \$150.
+I employ Claude (Anthropic) as my main classification model, using the tool-calling API to obtain structured responses.\footnote{I use the \texttt{claude-sonnet-4-20250514} model. Results are robust to using alternative frontier models; see Appendix \ref{appendix}.} I set the temperature... I process all 19,424 HS10 codes through the classification API with rate limiting to respect API constraints. Processing all codes required about a day and a half at a total cost of approximately \$150.
 
 
 %\afterpage{%
@@ -232,7 +286,7 @@ I employ Claude (Anthropic) as my main classification model, using the tool-call
 
 \newpage
 
-\section*{Appendix}
+\section{Appendix}\label{appendix}
 
 \begin{prompt}
 \noindent
