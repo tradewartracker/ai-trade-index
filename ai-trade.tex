@@ -18,6 +18,7 @@
 \usepackage[listings, most]{tcolorbox}
 \definecolor{nblue}{RGB}{0,0,128}
 \usepackage{afterpage}
+\usepackage{longtable}
 
 \usepackage[pdftex,colorlinks=true, bookmarks=false,
 pdfstartview={XYZ null null 0.85},
@@ -100,7 +101,7 @@ bottom = 2mm%,
 \renewcommand{\arraystretch}{1.1}
 \usepackage[margin=2cm]{geometry}
 
-%\input{results.tex}
+\input{tables/ai-trade-results.tex}
 
 \begin{document}
 
@@ -115,7 +116,7 @@ bottom = 2mm%,
 
 \vspace{0.5cm}
 
-January 2025
+February 2026
 
 \vspace{0.5cm}
 
@@ -128,7 +129,7 @@ January 2025
 
 ABSTRACT ------------------------------------------------------------------------------------------------------------
 
-This paper documents facts about international trade in AI-related products. I develop a large language model (LLM) classification tool that maps HS10 codes in U.S. trade data to inputs used in the construction and operation of data centers and related AI infrastructure. Using this classification, I show that U.S. trade in AI-related products rose by 130 percent since 2023 and diverged sharply from non-AI trade starting in early 2024. AI-related imports face substantially lower tariffs, about 3 percent versus 15 percent for non-AI products. Since the start of the 2025 trade war, aggregate trade appears stable only because AI-related trade more than offset a large decline in non-AI trade.
+This paper documents facts about international trade in AI-related products. I develop a large language model (LLM) classification tool that maps HS10 codes in U.S. trade data to inputs used in the construction and operation of AI infrastructure. Using this classification, I find that U.S. imports of AI-related products rose by \highAiPctChange{} percent since 2023, non-AI-related products declined by \lowAiPctChange{} percent with the divergence occurring early 2024. Since the start of the 2025 trade war, AI-related products face lower tariffs, \tariffHighTwentyFive{} percent versus \tariffLowTwentyFive{} percent for non-AI-related products. An important reason for why 2025 aggregate imports did not decline is because AI-related trade more than offset a decline in non-AI trade.
 
 ------------------------------------------------------------------------------------------------------------------------------
 \vspace{0.25cm}
@@ -215,11 +216,13 @@ I treat this as a classification problem and use a large language model (LLM) to
 
 \subsection{Data}
 
-One key input to the LLM is the complete universe of 10-digit Harmonized System commodity codes from U.S. Census Bureau trade statistics. The HS10 classification provides the finest level of product disaggregation available in U.S. trade data, with 19,424 distinct codes as of 2024. Each code includes a standardized commodity description. As an example, consider
+One key input to the LLM is the complete universe of 10-digit Harmonized System commodity codes from U.S. Census Bureau trade statistics. The HS10 classification provides the finest level of product disaggregation available in U.S. trade data, with \totalTradeHsCodes{} distinct codes as of 2024. Each code includes a standardized commodity description. As an example, consider
 \begin{prompt}
 \noindent\texttt{8542310040: PROCESSORS (INCLUDING MICROPROCESSORS): GRAPHICS PROCESSING UNITS (GPUS).}
 \end{prompt}
-where \texttt{8542310040} is the HS10 code and the description indicates that this product is a processor and specifically a GPU. As discussed below, this is a canonical \textbf{High} example.
+where \texttt{8542310040} is the HS10 code and the description indicates that this product is a processor and specifically a GPU. This is a canonical \textbf{High} example. 
+
+To provide more context to the LLM I supplement this information with a 6-digit NAICS classification code and the associated description. Because NAICS codes are production oriented, this provides context about how the product may be used. I use the census concordance from HS10 to NAICS available here. This concordance is, in some instances one to many, thus in those instances the \emph{list} of NAICS codes and descriptions are fed into the LLM and queried. 
 
 \subsection{LLM Classification Procedure}
 
@@ -239,7 +242,7 @@ In addition to this categorization, I also ask the model to provide a confidence
 \begin{itemize}
     \item $\texttt{relevance}_i \in \{\text{\textbf{High}}, \text{\textbf{Medium}}, \text{\textbf{Low}}\}$ is constrained by an enumerated type,
     \item $\texttt{confidence}_i \in [0, 100]$ is an integer confidence score,
-    \item $\texttt{category}_i$ maps to one of nine predefined categories (Compute Hardware, Networking/Telecom, Cooling/HVAC, Electrical/Power, Building Structure, Fire Safety/Security, Specialty Materials, Maintenance/Operations, Not DC Related),
+    \item $\texttt{category}_i$ maps to one of eight predefined categories (Compute Hardware, Networking/Telecom, Cooling/HVAC, Electrical/Power, Building Structure, Fire Safety/Security, Specialty Materials, Not DC Related),
     \item $\texttt{reasoning}_i$ provides a natural language explanation of the classification decision.
 \end{itemize}
 The schema enforcement ensures that every response contains valid values for all fields. The model cannot return ``Medium-High'' or ``Moderate'', etc. It will only the three specified relevance levels. The structured approach also facilitates systematic analysis and the comparison of outputs across different LLM models.
@@ -252,25 +255,60 @@ An important input is the prompt to the LLM. The prompt provides context on AI d
 \end{prompt}
 In addition to this prompt, it also instructs the model to consider edge cases explicitly. For example, products like diesel engines could be relevant (for generators) or irrelevant (for vehicles), and that context from the HS code description should guide the determination.
 
-I employ Claude (Anthropic) as my main classification model, using the tool-calling API to obtain structured responses.\footnote{I use the \texttt{claude-sonnet-4-20250514} model. Results are robust to using alternative frontier models; see Appendix \ref{appendix}.} I set the temperature... I process all 19,424 HS10 codes through the classification API with rate limiting to respect API constraints. Processing all codes required about a day and a half at a total cost of approximately \$150.
+I employ Claude (Anthropic) as my main classification model, using the tool-calling API to obtain structured responses.\footnote{I use the \texttt{claude-sonnet-4-20250514} model. Results are robust to using alternative frontier models; see Appendix \ref{appendix}.} I set the temperature... I process all \totalTradeHsCodes{} HS10 codes through the classification API with rate limiting to respect API constraints. Processing all codes required about a day and a half at a total cost of approximately \$150.
+
+\afterpage{%
+\clearpage
+%\refstepcounter{table}
+\input{tables/trade_hierarchical.tex}
+}
+
+\section{Facts about AI-Related Trade}\label{sec:facts}
+
+This section discuss several facts that arise from the classification scheme. I proceed in the following steps. First, I discuss what types of products actually show up in the classification schema. Second, I show how these AI-related products have grown substantially since early 2024. Finally, I discuss how AI-trade has interacted with the start of the 2025 trade war. 
+
+\subsection{What are AI-Related products?}\label{sec:facts}
+
+Table \ref{tab:trade_hierarchical} provides an overview of what is showing up in the classification scheme. The first row reports all HS10 codes that are classified as \textbf{High} relevance. High relevance codes encompass \totalHighAiHsCodes{} codes out of a total of \totalTradeHsCodes{} codes. The High relevance codes accounted for \aiShareTwentyThree{} percent of total imports in 2023. And this increased to \aiShareTwentyFive{} percent in 2025.
+
+The next seven rows of Table \ref{tab:trade_hierarchical} breaks down those HS10 codes classified as High into the seven predefined categories discussed above. Amongst those eight, there are essentially four main categories that standout: Compute Hardware, Electrical Power, Network and Telecom, and then Cooling HVAC. These four categories represent nearly 95 percent of all goods classified as \textbf{High} goods.
+
+Table \ref{tab:top10_high_relevance_landscape} provides a deep dive into the specific products behind the classification. It reports the top ten HS10 codes in terms of 2025 import volume which were classified as \textbf{High}. Along with these codes are the Census's short description, the LLM category, the LLM reasoning behind the classification, and various trade statistics.\footnote{The trade statistics are 2025 imports, the share of those imports among all high categories, and the change in import volume relative to 2023. The description is the Census short description, this is different from their long description which is what is fed into the LLM.} The dominant HS10 code is {\tt 8471500150} which are described (in short form) as processing units. And the LLM reasoned that data processing units are a core component to compute hardware.
+
+While this top 10 list is dominated by other types of computer hardware and networking equipment, there are other products classified as important. In particular, {\tt 7403110000} or refined copper cathodes is the sixth most important product on this list. The LLM reasoning is that refined copper cathodes are a key input into making copper products for copper products (e.g. electrical wire ) used in data centers. Table \ref{tab:top11to20_high_relevance_landscape} in the appendix reports the top 11-20 products. 
+
+\afterpage{%
+\clearpage
+\input{tables/top10_high_relevance_landscape.tex}
+}
+
+\afterpage{%
+\clearpage
+\begin{landscape}
+\begin{figure}
+\centering
+\caption{U.S. imports of AI and non-AI products}\label{fig:ai-trade-index}
+\includegraphics[height=0.80\textheight]{./figures/ai-trade-index.pdf}
+\end{figure}
+\end{landscape}}
 
 
-%\afterpage{%
-%\clearpage
-%\begin{landscape}
-%\begin{figure}
-%\centering
-%\caption{Tariff Measures for Selected HS2 Sectors}\label{fig:sector-tariff-pannel}
-%\includegraphics[height=0.95\textheight]{./figures/panel-top-sector-tariffs.pdf}
-%\end{figure}
-%\end{landscape}}
+
+
+\afterpage{%
+\clearpage
+\begin{landscape}
+\begin{figure}
+\centering
+\caption{Tariff Rates on AI and non-AI products and by Category}\label{fig:ai-trade-index}
+\includegraphics[height=0.55\textheight]{./figures/ai-tariffs.pdf}
+\end{figure}
+\end{landscape}}
 
 
 
-%\afterpage{%
-%\clearpage
-%\input{table.tex}
-%}
+
+
 %
 %\afterpage{%
 %\clearpage
@@ -359,6 +397,14 @@ Description: \{description\}
 \texttt{reasoning}: string (explanation of classification decision)
 
 \end{prompt}
+
+\newpage
+
+\afterpage{%
+\clearpage
+\input{tables/top11to20_high_relevance_landscape.tex}
+}
+
 
 
 \end{onehalfspacing}
