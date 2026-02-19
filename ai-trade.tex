@@ -108,7 +108,7 @@ bottom = 2mm%,
 
 \begin{onehalfspacing}
 
-{\large \textbf{Trade in AI-Related Products}}
+{\large \textbf{Trade in AI Related Products}}
 
 \vspace{0.5cm}
 
@@ -129,7 +129,7 @@ February 2026
 
 ABSTRACT ------------------------------------------------------------------------------------------------------------
 
-This paper documents facts about international trade in AI-related products. I develop a large language model (LLM) classification tool that maps HS10 codes in U.S. trade data to inputs used in the construction and operation of AI infrastructure. Using this classification, I find that U.S. imports of AI-related products rose by \highAiPctChange{} percent since 2023, non-AI-related products declined by \lowAiPctChange{} percent with the divergence occurring early 2024. Since the start of the 2025 trade war, AI-related products face lower tariffs, \tariffHighTwentyFive{} percent versus \tariffLowTwentyFive{} percent for non-AI-related products. An important reason for why 2025 aggregate imports did not decline is because AI-related trade more than offset a decline in non-AI trade.
+This paper documents facts about international trade in AI-related products. I develop a large language model (LLM) classification tool that maps HS10 codes in U.S. trade data to inputs used in the construction and operation of AI infrastructure. Using this classification, I find that U.S. imports of AI-related products displayed spectacular growth rising by \highAiPctChange{} percent since 2023, where as non-AI-related products fell by \lowAiPctChange{} percent with the divergence occurring early 2024. Taiwan and Mexico are the dominant sources for AI-related products with both countries accounting for about half of all AI-trade. Thrid, AI-related products face lower tariffs, \tariffHighTwentyFive{} percent versus \tariffLowTwentyFive{} percent for non-AI-related products. Together, these facts point to an important source of resilience in aggregate U.S. trade since the re-emergence of protectionism in 2025. 
 
 ------------------------------------------------------------------------------------------------------------------------------
 \vspace{0.25cm}
@@ -150,7 +150,9 @@ Keywords: Tariffs, U.S. Trade Policy, Trade Restrictiveness Index
 
 \newpage
 
-\subsection*{Introduction}
+Two trends dominated economic outcomes in 2025. One is the dramatic change in U.S. trade policy. The second is a massive AI-investment driven boom with hundreds of billions, if not trillions, invested in building out datacenters and other related AI-infrastructure projects. 
+
+
 
 %https://www.bloomberg.com/news/articles/2026-02-06/how-much-is-big-tech-spending-on-ai-computing-a-staggering-650-billion-in-2026
 %
@@ -267,43 +269,98 @@ I employ Claude (Anthropic) as my main classification model, using the tool-call
 
 This section discuss several facts that arise from the classification scheme. I proceed in the following steps. First, I discuss what types of products actually show up in the classification schema. Second, I show how these AI-related products have grown substantially since early 2024. Finally, I discuss how AI-trade has interacted with the start of the 2025 trade war. 
 
-\subsection{What are AI-Related products?}\label{sec:facts}
+\subsection{What are AI-Related products?}\label{sec:facts-ai-products}
 
-Table \ref{tab:trade_hierarchical} provides an overview of what is showing up in the classification scheme. The first row reports all HS10 codes that are classified as \textbf{High} relevance. High relevance codes encompass \totalHighAiHsCodes{} codes out of a total of \totalTradeHsCodes{} codes. The High relevance codes accounted for \aiShareTwentyThree{} percent of total imports in 2023. And this increased to \aiShareTwentyFive{} percent in 2025.
+Table \ref{tab:trade_hierarchical} provides an overview of what shows up in the classification scheme. The first row reports all HS10 codes that are classified as \textbf{High} relevance. High relevance codes encompass \totalHighAiHsCodes{} codes out of a total of \totalTradeHsCodes{} codes. The \textbf{High} relevance codes accounted for \aiShareTwentyThree{} percent of total imports in 2023 and this increased to \aiShareTwentyFive{} percent in 2025.
 
-The next seven rows of Table \ref{tab:trade_hierarchical} breaks down those HS10 codes classified as High into the seven predefined categories discussed above. Amongst those eight, there are essentially four main categories that standout: Compute Hardware, Electrical Power, Network and Telecom, and then Cooling HVAC. These four categories represent nearly 95 percent of all goods classified as \textbf{High} goods.
+The next seven rows of Table \ref{tab:trade_hierarchical} breaks down those HS10 codes classified as \textbf{High} into the seven predefined categories discussed above. Amongst those eight, there are essentially four main categories that standout: Compute Hardware, Electrical Power, Network and Telecom, and then Cooling HVAC. These four categories represent nearly 95 percent of all goods classified as \textbf{High} goods.
 
-Table \ref{tab:top10_high_relevance_landscape} provides a deep dive into the specific products behind the classification. It reports the top ten HS10 codes in terms of 2025 import volume which were classified as \textbf{High}. Along with these codes are the Census's short description, the LLM category, the LLM reasoning behind the classification, and various trade statistics.\footnote{The trade statistics are 2025 imports, the share of those imports among all high categories, and the change in import volume relative to 2023. The description is the Census short description, this is different from their long description which is what is fed into the LLM.} The dominant HS10 code is {\tt 8471500150} which are described (in short form) as processing units. And the LLM reasoned that data processing units are a core component to compute hardware.
-
-While this top 10 list is dominated by other types of computer hardware and networking equipment, there are other products classified as important. In particular, {\tt 7403110000} or refined copper cathodes is the sixth most important product on this list. The LLM reasoning is that refined copper cathodes are a key input into making copper products for copper products (e.g. electrical wire ) used in data centers. Table \ref{tab:top11to20_high_relevance_landscape} in the appendix reports the top 11-20 products. 
+Table \ref{tab:top10_high_relevance_landscape} provides a deep dive into the specific products behind the classification. It reports the top ten HS10 codes in terms of 2025 import volume which were classified as \textbf{High}. Along with these codes are the Census's short description, the LLM category, the LLM reasoning behind the classification, and various trade statistics.\footnote{The trade statistics are 2025 imports, the share of those imports in total trade, and the change in import volume relative to 2023. The description is the Census short description, this is different from their long description which is what is fed into the LLM.} The dominant HS10 code is {\tt 8471500150} which are described (in short form) as processing units. And the LLM reasoned that data processing units are a core component to compute hardware.
 
 \afterpage{%
 \clearpage
 \input{tables/top10_high_relevance_landscape.tex}
 }
 
-\afterpage{%
-\clearpage
-\begin{landscape}
-\begin{figure}
+While this top 10 list is dominated by other types of computer hardware and networking equipment, there are other products classified as important. In particular, {\tt 7403110000} or refined copper cathodes is the sixth most important product on this list. The LLM reasoning is that refined copper cathodes are a key input into making copper products for copper products (e.g. electrical wire ) used in data centers. Table \ref{tab:top11to20_high_relevance_landscape} in the appendix reports the top 11-20 products. 
+
+In looking through Table \ref{tab:trade_hierarchical} or \ref{tab:top10_high_relevance_landscape}, one can not help but noticing the dramatic growth in trade volumes in nearly all categories. The next section discuss this growth. 
+
+\subsection{The Spectacular Growth of AI-Related Trade}\label{sec:facts-ai-products}
+
+Figure \ref{fig:ai-trade-index} is the most important figure in this paper. It plots several different indexes of trade volumes. These indexes are computed by taking trade volumes in a category for a given month, then normalizing it by monthly average for 2023. 
+
+ \begin{figure}[t]
 \centering
+\includegraphics[height=0.45\textheight]{./figures/ai-trade-index.pdf}
 \caption{U.S. imports of AI and non-AI products}\label{fig:ai-trade-index}
-\includegraphics[height=0.80\textheight]{./figures/ai-trade-index.pdf}
 \end{figure}
-\end{landscape}}
 
+Focus on the blue line titled ``AI Relevant.'' This is the index computed for all \textbf{High} products. The most obvious feature of AI related products is the spectacular growth. Currently, in December of 2025, the index for AI relevant products is \aiRelevantIndex{}, meaning import volumes are 124 percent larger than the typical month in 2023. And judging from the trend, this growth is not slowing but it has accelerated through 2025.
 
+The second observation related to AI relevant products is when the growth occurred. From 2022 to early 2024, there is no differential trend in AI relevant products relative to non AI relevant products. After early 2024, there is divergence and this divergence accelerates in 2025. As a sanity check, this is consistent with the broad narratives about the timing AI investment boom. 
 
+Where is the growth coming from? Return to the final column of Table \ref{tab:trade_hierarchical}. For each category the final column reports 2025 trade volumes relative to 2023 in percent terms. Consistent with Figure \ref{fig:ai-trade-index}, \textbf{High} AI relevant products grew by \highAiPctChange{} percent. Then the break down by category shows that this growth is broad based | there is double digit growth in 5 out of the 7 categories. Focusing on products, Table \ref{tab:top10_high_relevance_landscape} confirms how broad and spectacular the growth is with the all of the top 10 HS10 codes displaying double digit growth; five display triple digit growth rates. Put another way, this growth in trade is just not about one or two products. 
 
-\afterpage{%
-\clearpage
-\begin{landscape}
-\begin{figure}
+The black and red lines report aggregate trade and ``not AI Relevant.'' The latter series is the index computed for all \textbf{Low} products. In aggregate, trade has grown in 2025 by \totalTradePctChange{} relative to 2023. In someway, this aggregate growth is strong given that U.S. tariffs increased by more than ten percentage points in 2025. However, this modest growth is simply a by product of the spectacular growth in the AI relevant products. One these products are striped out and one focuses on non AI Relevant products, trade as of December 2025 is 8 percent lower than the typical month in 2023. On a year over year basis, Table \ref{tab:trade_hierarchical} reports that non AI Relevant products grew by \lowAiPctChange{} and much of this growth owes to the front-running of tariffs in early 2025. 
+
+\subsection{Mexico and Taiwan are Dominant Sources}\label{sec:facts-ai-products}
+
+ \begin{figure}[t]
 \centering
-\caption{Tariff Rates on AI and non-AI products and by Category}\label{fig:ai-trade-index}
-\includegraphics[height=0.55\textheight]{./figures/ai-tariffs.pdf}
+\includegraphics[height=0.40\textheight]{./figures/ai-by-country.png}
+\caption{U.S. imports of AI and non-AI products}\label{fig:ai-trade-country}
 \end{figure}
-\end{landscape}}
+
+
+ \begin{figure}[t]
+\centering
+\includegraphics[height=0.40\textheight]{./figures/ai-by-country-category.png}
+\caption{U.S. imports of AI and non-AI products}\label{fig:ai-trade-country-catagoy}
+\end{figure}
+
+
+%\begin{figure}[t]
+%\centering
+%\caption{Data and Model}\label{fig:simmulated-trade-flows}
+%\begin{subfigure}[t]{0.48\textwidth}
+%    \centering
+%    \caption{Trade Data vs. Exact EK}
+%    \includegraphics[width=\textwidth]{./figures/ai-by-country.png}
+%    \label{fig:trade-flows-exact}
+%\end{subfigure}
+%\hfill
+%\begin{subfigure}[t]{0.48\textwidth}
+%    \centering
+%    \caption{Exact EK vs. Monte Carlo EK}
+%    \includegraphics[width=\textwidth]{./figures/ai-by-country-category.png}
+%    \label{fig:trade-flows-monte-carlo}
+%\end{subfigure}
+%\end{figure}
+
+
+%\afterpage{%
+%\clearpage
+%\begin{landscape}
+%\begin{figure}
+%\centering
+%\caption{U.S. imports of AI and non-AI products}\label{fig:ai-trade-index}
+%\includegraphics[height=0.80\textheight]{./figures/ai-trade-index.pdf}
+%\end{figure}
+%\end{landscape}}
+
+
+
+
+%\afterpage{%
+%\clearpage
+%\begin{landscape}
+%\begin{figure}
+%\centering
+%\caption{Tariff Rates on AI and non-AI products and by Category}\label{fig:ai-trade-index}
+%\includegraphics[height=0.55\textheight]{./figures/ai-tariffs.pdf}
+%\end{figure}
+%\end{landscape}}
 
 
 
