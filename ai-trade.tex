@@ -22,7 +22,7 @@
 
 \usepackage[pdftex,colorlinks=true, bookmarks=false,
 pdfstartview={XYZ null null 0.85},
-pdftitle={How Restrictive is U.S. Trade Policy?},
+pdftitle={Trade in AI-Related Products},
 pdfauthor={Michael E. Waugh},
 pdfkeywords={tariffs, trade wars, Minneapolis Fed, trade policy
 Trade Restrictiveness Index, U.S. trade policy, Deadweight loss},
@@ -108,7 +108,7 @@ bottom = 2mm%,
 
 \begin{onehalfspacing}
 
-{\large \textbf{Trade in AI Related Products}}
+{\large \textbf{Trade in AI-Related Products}}
 
 \vspace{0.5cm}
 
@@ -129,7 +129,7 @@ February 2026
 
 ABSTRACT ------------------------------------------------------------------------------------------------------------
 
-This paper documents facts about international trade in AI-related products. I develop a large language model (LLM) classification tool that maps HS10 codes in U.S. trade data to inputs used in the construction and operation of AI infrastructure. Using this classification, I find that U.S. imports of AI-related products displayed spectacular growth, rising by \highAiPctChange{} percent since 2023, where as non-AI-related products fell by \lowAiPctChange{} percent with the divergence beginning early 2024. Mexico and Taiwan are the dominant sources for AI-related products with both countries accounting for about half of all AI trade. AI-related products face lower tariffs, \tariffHighTwentyFive{} percent versus \tariffLowTwentyFive{} percent for non-AI-related products. These facts point to an important source of resilience in U.S. trade since the re-emergence of protectionism in 2025. 
+This paper documents facts about international trade in AI-related products. I develop a large language model (LLM) classification tool that maps HS10 codes in U.S. trade data to inputs used in the construction and operation of AI infrastructure. AI-related products account for 23 percent of U.S. imports in 2025, and these products have grown by \highAiPctChange{} percent since 2023. Over this same time period, non-AI-related products have grown by only \lowAiPctChange{} percent with the divergence between the two categories beginning in early 2024. U.S. exports of AI-related products have been similarly strong, suggestive that U.S. exporters play an important role in the AI global value chain. Mexico is a key market for both the import and export side, and along with Taiwan these two countries accounting for about half of all AI trade. AI-related products face lower tariffs, \tariffHighTwentyFive{} percent versus \tariffLowTwentyFive{} percent for non-AI-related products. These facts point to an important source of resilience in U.S. trade since the re-emergence of protectionism in 2025. 
 
 ------------------------------------------------------------------------------------------------------------------------------
 \vspace{0.25cm}
@@ -142,7 +142,7 @@ Keywords: Tariffs, U.S. Trade Policy, Trade Restrictiveness Index
 % need to run notebooks: TRI-all-country.ipynb
 % then run TRI-sector
 
-\vspace{4.0cm}
+\vspace{3.0cm}
 
 {\footnotesize Email: michael.e.waugh@gmail.com. The views expressed herein are those of the author and not necessarily those of the Federal Reserve Bank of Minneapolis or the Federal Reserve System. My github repository provides the code and supplementary work behind this paper at \url{https://github.com/}.}
 
@@ -150,7 +150,19 @@ Keywords: Tariffs, U.S. Trade Policy, Trade Restrictiveness Index
 
 \newpage
 
-Two trends dominated economic outcomes in 2025. One is the dramatic change in U.S. trade policy. The second is a massive AI-investment driven boom with hundreds of billions, if not trillions, invested in building out datacenters and other related AI-infrastructure projects. 
+The United States is experiencing a massive AI-investment driven boom with hundreds of billions, if not trillions, of dollars being invested in the build out of datacenters and other related AI-infrastructure projects. This paper asks the question: How is this AI-datacenter build out influencing international trade flows? The answer is that trade in AI-related products is perhaps \emph{the} dominant force in U.S. trade flows over the past two years. And this observation is despite the dramatic changes in U.S. trade policy that have taken place over this time period. 
+
+Key to answering this question requires some knowledge about what products are related to AI-infrastructure. My approach uses a large language model (LLM) classification tool that maps knowledge and descriptions of products available in trade data into a systematic classification of if that product might be used in AI-infrastructure and how it is used. This classification allows me to take unstructured descriptions and then construct structured measures of international trade in AI-related products.
+
+What are AI-related products? My classification tool identifies the unusual suspects like data processing units, storage devices, etc. These computer hardware components account for half of all AI-related products and imports of these products have grown by triple digits since 2023. However, my classification tool also identifies a broader array of products that relate to electrical infrastructure, networking, cooling and HVAC, and specialty materials. These ancillary products account for the other half of AI-related products and have displayed double digit import growth.  
+
+In aggregate, these AI-related products are a dominant force behind U.S trade flows. Through 2025, they account for nearly a quarter of all U.S. imports. And this share was half as small in 2023. Leading into 2023, AI-related products grew no differently than non-AI-related products. But since early 2024, import growth in AI-related products exploded | see Figure \ref{fig:ai-trade-index}. Exports of AI-related products display a similar trend and the destinations and products suggests that trade in AI-related products is not onesided, but that U.S. exporters play an important role in the AI global value chain.
+
+Two countries play an important role in the sourcing of AI-related products. Not surprisingly, Taiwan is an important source for computer hardware components (e.g. semiconductors) and Taiwan accounts for about a quarter of imports of AI-related products. The surprising source is Mexico. They account for another quarter of AI-related trade and their reach is important in computer hardware and other products related to electrical power, networking, and cooling HVAC. 
+
+ 
+
+
 
 
 
@@ -214,17 +226,19 @@ Two trends dominated economic outcomes in 2025. One is the dramatic change in U.
 
 This section describes how I classify internationally traded commodities that are plausibly used to build and operate AI-focused data centers | hyperscale facilities that rely on GPU servers, high-speed networking, and high-density power and cooling. The measurement question is: which traded goods plausibly enter AI data-center construction, equipping, and operations?
 
-I treat this as a classification problem and use a large language model (LLM) to systematically label the universe of HS10 commodity codes (about 19,000) by their relevance to AI data-center infrastructure. There are several nice examples of using LLMs for classification purposes in economics. For example, \citet{clayton2025geoeconomic} develop measures of ``geoeconomic pressure'' by using an LLM to read earnings calls and classify which governments apply pressure, to whom, and how. Similarly, \citet{lagakos2025american} use LLMs to extract systematic information from individuals' life narratives on sources of meaning and overall life satisfaction. The methodological idea is the same | provide the LLM a list of HS10 commodity descriptions and then ask systematic questions about the relevance of the product to AI infrastructure.
+I treat this as a classification problem and use a large language model (LLM) to systematically label the universe of HS10 commodity codes (about 19,000) by their relevance to AI data-center infrastructure. There are many examples of using LLMs for classification purposes in economics. For example, \citet{clayton2025geoeconomic} develop measures of ``geoeconomic pressure'' by using an LLM to read earnings calls and classify which governments apply pressure, to whom, and how. Similarly, \citet{lagakos2025american} use LLMs to extract systematic information from individuals' life narratives on sources of meaning and overall life satisfaction. The methodological idea is the same | provide the LLM a list of commodity descriptions and then ask systematic questions about the relevance of the product to AI infrastructure.
 
 \subsection{Data}
 
-One key input to the LLM is the complete universe of 10-digit Harmonized System commodity codes from U.S. Census Bureau trade statistics. The HS10 classification provides the finest level of product disaggregation available in U.S. trade data, with \totalTradeHsCodes{} distinct codes as of 2024. Each code includes a standardized commodity description. As an example, consider
+Several inputs are provided to the LLM. First, I use a list of 10-digit Harmonized System commodity codes from U.S. Census Bureau trade statistics. The HS10 classification provides the finest level of product disaggregation available in U.S. trade data, with \totalTradeHsCodes{} distinct codes found 2024 import and export data. Each HS10 code includes a standardized commodity description. As an example, consider
 \begin{prompt}
 \noindent\texttt{8542310040: PROCESSORS (INCLUDING MICROPROCESSORS): GRAPHICS PROCESSING UNITS (GPUS).}
 \end{prompt}
 where \texttt{8542310040} is the HS10 code and the description indicates that this product is a processor and specifically a GPU. This is a canonical \textbf{High} example. 
 
-To provide more context to the LLM I supplement this information with a 6-digit NAICS classification code and the associated description. Because NAICS codes are production oriented, this provides context about how the product may be used. I use the census concordance from HS10 to NAICS available here. This concordance is, in some instances one to many, thus in those instances the \emph{list} of NAICS codes and descriptions are fed into the LLM and queried. 
+The second input that I provide to the LLM is the 6-digit NAICS classification code and the associated description that relates to the HS10 code above. The idea here is to provide the LLM with more context about the HS10 code. NAICS codes do so because they are production oriented, and thus provide context about how the product may be used. I use the concordance provided by the \href{https://www.census.gov/foreign-trade/schedules/b/2022/imp-code.txt}{Census} which provides a mapping from HS10 codes to the six digit NAICS codes. In cases where there are multiple NAICS associated with an HS10 code, I provide the LLM with a list of the NAICS codes and associated descriptions. 
+
+Finally, I restrict attention only to commodities that do not include petroleum products, precious metals, or HS2 chapters 98 and 99 which include art, antiques, and other special provisions. 
 
 \subsection{LLM Classification Procedure}
 
@@ -251,7 +265,11 @@ The schema enforcement ensures that every response contains valid values for all
 
 An important input is the prompt to the LLM. The prompt provides context on AI data center construction and describes the categories of relevant products. The prompt also ensures that the output is structured according to the schema described above. The complete prompt is presented in the appendix, but the first snippet is the following:
 \begin{prompt}
-\texttt{You are an expert in AI data center construction, operations, and supply chains. Your task is to classify HS10 commodity codes by their relevance to building and operating AI-focused data centers (hyperscale facilities running GPU clusters for training and inference).}\\
+\texttt{You are an expert in AI data center construction, operations, and supply chains. Your task is to classify products by their relevance to building and operating AI-focused data centers (hyperscale facilities running GPU clusters for training and inference. You will be provided with two pieces of information about each product:}\\
+
+\texttt{1. **HS10 Code and Description**: The Harmonized System (HS) is an international product classification used for trade statistics. The HS10 code is a 10-digit code used by U.S. Customs to classify imported goods. The description tells you what the physical product is.}\\
+
+\texttt{2. **NAICS Code and Description**: The North American Industry Classification System (NAICS) indicates which U.S. industry produces or uses this product. This provides additional context about the product's typical industrial application.}\\
 
 \texttt{Consider these categories of relevant products: COMPUTE: GPUs, CPUs, memory, PCBs, servers, storage drives, semiconductors; NETWORKING: Fiber optics, switches, routers, transceivers, cables; COOLING: Chillers, cooling towers, CRAH units, fans, pumps, refrigerants; ELECTRICAL: Transformers, switchgear, UPS, batteries, generators, cables; BUILDING: Structural steel, concrete, rebar, insulation, raised floors; SPECIALTY MATERIALS: Rare earths, copper, aluminum, tantalum, thermal interface materials...}
 \end{prompt}
@@ -403,9 +421,13 @@ Figure \ref{fig:ai-trade-country-catagoy} breaks down the country composition by
 
 \medskip
 
-You are an expert in AI data center construction, operations, and supply chains.
+You are an expert in AI data center construction, operations, and supply chains. Your task is to classify products by their relevance to building and operating AI-focused data centers (hyperscale facilities running GPU clusters for training and inference. You will be provided with two pieces of information about each product:\\
 
-Your task is to classify HS10 commodity codes by their relevance to building and operating AI-focused data centers (hyperscale facilities running GPU clusters for training and inference).
+1. **HS10 Code and Description**: The Harmonized System (HS) is an international product classification used for trade statistics. The HS10 code is a 10-digit code used by U.S. Customs to classify imported goods. The description tells you what the physical product is.\\
+
+2. **NAICS Code and Description**: The North American Industry Classification System (NAICS) indicates which U.S. industry produces or uses this product. This provides additional context about the product's typical industrial application.\\
+
+Consider these categories of relevant products: COMPUTE: GPUs, CPUs, memory, PCBs, servers, storage drives, semiconductors; NETWORKING: Fiber optics, switches, routers, transceivers, cables; COOLING: Chillers, cooling towers, CRAH units, fans, pumps, refrigerants; ELECTRICAL: Transformers, switchgear, UPS, batteries, generators, cables; BUILDING: Structural steel, concrete, rebar, insulation, raised floors; SPECIALTY MATERIALS: Rare earths, copper, aluminum, tantalum, thermal interface materials...).
 
 \medskip
 
