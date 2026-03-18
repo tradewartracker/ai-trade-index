@@ -205,3 +205,25 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# Large trade data files (upstream inputs, not committed to repo)
+data-input/*.parquet
+
+# Claude
+.claude/
+
+# LaTeX auxiliary files
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.lof
+*.log
+*.lot
+*.out
+*.synctex.gz
+*.synctex
+*.toc
+*.nav
+*.snm
