@@ -2,6 +2,8 @@
 
 For technical documentation on the repository structure, data pipeline, and how to reproduce the analysis, see [TECHNICAL-README.md](TECHNICAL-README.md).
 
+**Paper:** [Trade in AI-Related Products (PDF)](paper/ai-trade.pdf)
+
 **Abstract.** This paper documents facts about international trade in AI-related products. I develop a large language model (LLM) classification tool that maps HS10 codes in U.S. trade data to inputs used in the construction and operation of AI infrastructure. AI-related products account for 23 percent of U.S. imports in 2025, and these products have grown by 73 percent since 2023. Over this same time period, non-AI-related products have grown by only 3 percent, with the divergence between the two categories beginning in early 2024. U.S. exports of AI-related products have been abnormally strong as well. Mexico is a key market for both the import and export side, and along with Taiwan these two countries account for about half of all AI trade. A simple accounting exercise suggests that the U.S. goods trade deficit would have been nearly $200 billion smaller in 2025 absent trade in AI-related products.
 
 
