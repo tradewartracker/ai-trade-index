@@ -117,14 +117,14 @@ bottom = 2mm%,
 
 April 2026
 
-\vspace{2.5cm}
+\vspace{2.25cm}
 
 
 \normalsize
 
 ABSTRACT ------------------------------------------------------------------------------------------------------------
 
-This paper documents facts about international trade in AI-related products. I develop a large language model (LLM) classification tool that maps HS10 codes in U.S. trade data to products used in the construction and operation of AI infrastructure. AI-related products account for \aiShareTwentyFive{} percent of U.S. imports in 2025, and imports of these products have grown by \highAiPctChange{} percent since 2023. Over the same period, imports of non-AI-related products have grown by only \lowAiPctChange{} percent, with the divergence between the two categories beginning in early 2024. Mexico is a key market on both the import and export side, and together with Taiwan these two countries account for about half of all U.S. trade in AI-related products. Trade policy has treated these products lightly | product-level exemptions have shielded much of AI-related imports from tariffs. A simple accounting exercise suggests that the U.S. goods trade deficit would have been nearly \$200 billion smaller in 2025 absent the AI boom.
+This paper documents facts about international trade in AI-related products. I develop a large language model (LLM) classification tool that maps HS10 codes in U.S. trade data to products used in the construction and operation of AI infrastructure. AI-related products account for \aiShareTwentyFive{} percent of U.S. imports in 2025, and imports of these products have grown by \highAiPctChange{} percent since 2023. Over the same period, imports of non-AI-related products have grown by only \lowAiPctChange{} percent, with the divergence between the two categories beginning in early 2024. Mexico is a key market on both the import and export side, and together with Taiwan these two countries account for about half of all U.S. trade in AI-related products. Trade policy has treated these products lightly with product-level exemptions shielding much of AI-related imports from tariffs. Absent the AI boom, a simple accounting exercise suggests that the U.S. goods trade deficit would have been nearly \$200 billion smaller in 2025 
 
 ------------------------------------------------------------------------------------------------------------------------------
 \vspace{0.25cm}
@@ -150,11 +150,11 @@ Answering this question requires knowledge about what products are related to AI
 
 What are AI-related products? The classification identifies the obvious computer hardware inputs such as data processing units and storage devices. These products account for about half of all AI-related trade and imports of them have grown by triple digits since 2023. But the classification also identifies a broader set of products tied to electrical infrastructure, networking, cooling and HVAC, and specialty materials. These ancillary products account for the other half of AI-related trade and have also experienced strong import growth.
 
-Through 2025, AI-related products account for \aiShareTwentyFive{} percent of all U.S. imports, up from \aiShareTwentyThree{} percent in 2023. Through early 2024, AI-related products grew no differently than non-AI-related products. But since early 2024, import growth in AI-related products has accelerated sharply. As of \lastObsDate{}, trade in AI-related products had grown by \totalHighAiPctChange{} percent relative to 2023, compared with only \lowAiPctChange{} percent for non-AI-related products.
+Through 2025, AI-related products account for \aiShareTwentyFive{} percent of all U.S. imports, up from \aiShareTwentyThree{} percent in 2023. Leading into the start of 2024, AI-related products grew no differently than non-AI-related products. But since early 2024, import growth in AI-related products has accelerated sharply. As of \lastObsDate{}, trade in AI-related products had grown by \totalHighAiPctChange{} percent relative to 2023, compared with only \lowAiPctChange{} percent for non-AI-related products.
 
 Where are these products coming from? Two countries play an important role in the sourcing of AI-related products. Not surprisingly, Taiwan is an important source for computer hardware components (e.g. semiconductors) and Taiwan accounts for about a quarter of imports of AI-related products. The surprising source is Mexico. It accounts for another quarter of AI-related trade and its reach extends to computer hardware and other products related to electrical power, networking, and cooling HVAC. China is less important in AI-related trade and its overall share has diminished over the past two years. 
 
-How has trade policy treated AI-related products? Lightly. Since the beginning of 2025, the U.S. has experienced a large change in trade policy with average tariff rates increasing by more than 10 percentage points (see, e.g. \citet{waugh2026restrictive} or \citet{budgetlab2025tariffs}).  I find that effective tariff rates on AI-related products are substantially lower than on other goods. As of the end of 2025, the effective tariff rate on AI-related products was \tariffHighTwentyFive{} percent, compared with \tariffLowTwentyFive{} percent for non-AI products. This gap largely reflects product-level exemptions issued around the ``Liberation day'' tariffs in April of 2025. These exemptions essentially covered about \exemptionAnyPct{} percent of all AI-related products by value. And these exemptions were quickly put back in place when the Section 122 surcharge was implemented in February of 2026.
+How has trade policy treated AI-related products? Lightly. Since the beginning of 2025, the U.S. has experienced a large change in trade policy with average tariff rates increasing by more than 10 percentage points (see, e.g. \citet{waugh2026restrictive} or \citet{budgetlab2025tariffs}).  I find that effective tariff rates on AI-related products are substantially lower than on other goods. At the end of 2025, the effective tariff rate on AI-related products was \tariffHighTwentyFive{} percent, compared with \tariffLowTwentyFive{} percent for non-AI products. This gap largely reflects product-level exemptions issued around the ``Liberation day'' tariffs in April of 2025. These exemptions essentially covered about \exemptionAnyPct{} percent of all AI-related products by value. And these exemptions were quickly put back in place when the Section 122 surcharge was implemented in February of 2026.
 
 The massive growth in trade in AI-related products is not isolated to the import side. Exports of AI-related products have grown by \aiExportGrowth{} percent since 2023. Mexico is the dominant destination, accounting for about a third of all AI-related exports, and it leads across nearly every product category. This is suggestive that the U.S. plays an important role in AI global value chains. 
 
@@ -178,15 +178,15 @@ where \texttt{8542310040} is the HS10 code and the description indicates that th
 
 The second input is the associated 6-digit NAICS code and its description. The idea is to give the LLM additional context about the HS10 code. NAICS codes do this because they are production-oriented, providing context about how a product is typically manufactured and used. I use the \href{https://www.census.gov/foreign-trade/schedules/b/2022/imp-code.txt}{Census} concordance, which maps HS10 codes to six-digit NAICS codes. In cases where there are multiple NAICS codes associated with an HS10 code, I provide the LLM with a list of the NAICS codes and list of descriptions. 
 
-Finally, I exclude several classes of commodities in the analysis. The ones excluded are petroleum products (HS chapter 27), precious metals (HS chapter 71), and HS2 chapters 98 and 99, which include art, antiques, and other special provisions. 
+In the analysis, I focus on nominal U.S. trade flows from the U.S. Census Bureau trade statistics. I exclude several classes of commodities in the analysis. The ones excluded are petroleum products (HS chapter 27), precious metals (HS chapter 71), and HS2 chapters 98 and 99, which include art, antiques, and other special provisions. 
 
 \subsection{LLM Classification Procedure}
 
 The classification procedure requires specifying both a categorization scheme and a prompt to implement it. The primary scheme that I implement is to classify each HS10 code into one of three bins:
 \begin{itemize}
-    \item \textbf{High}: Products directly used in data center construction or operation, with clear application to compute, cooling, power, networking, or facility infrastructure
-    \item \textbf{Medium}: Products with plausible data center applications but also significant non-data-center uses, or indirect inputs to data center materials
-    \item \textbf{Low}: Products with no apparent connection to data center construction
+    \item \textbf{High}: Products directly used in data center construction or operation, with clear application to compute, cooling, power, networking, or facility infrastructure.
+    \item \textbf{Medium}: Products with plausible data center applications but also significant non-data-center uses, or indirect inputs to data center materials.
+    \item \textbf{Low}: Products with no apparent connection to data center construction.
 \end{itemize}
 In the baseline results, I focus on products classified as \textbf{High}. I include \textbf{Medium}-rated products only as a robustness check.
 
@@ -213,9 +213,9 @@ An important input is the prompt to the LLM. The prompt provides context on AI d
 
 \texttt{Consider these categories of relevant products: COMPUTE: GPUs, CPUs, memory, PCBs, servers, storage drives, semiconductors; NETWORKING: Fiber optics, switches, routers, transceivers, cables; COOLING: Chillers, cooling towers, CRAH units, fans, pumps, refrigerants; ELECTRICAL: Transformers, switchgear, UPS, batteries, generators, cables; BUILDING: Structural steel, concrete, rebar, insulation, raised floors; SPECIALTY MATERIALS: Rare earths, copper, aluminum, tantalum, thermal interface materials...}
 \end{prompt}
-The prompt also instructs the model to consider edge cases explicitly | for example, that products like diesel engines could be relevant (for generators) or irrelevant (for vehicles), and that context from the HS description should guide such determinations.\footnote{I employ Claude (Anthropic) as my main classification model, using the tool-calling API to obtain structured responses.}
+The prompt also instructs the model to consider edge cases explicitly | for example, that products like diesel engines could be relevant (for generators) or irrelevant (for vehicles), and that context from the HS and NAICS description should guide such determinations.\footnote{I employ Claude (Anthropic) as my main classification model, using the tool-calling API to obtain structured responses.}
 
-Several runs of the classification procedure have yielded broadly stable results, particularly for the aggregate patterns that are the focus of the paper. As a further cross-check, an earlier version of the project used a much simpler keyword-matching procedure, based on a list of AI-infrastructure-related materials and products that was then matched to HS descriptions. While that approach was much coarser than the LLM-based classification, it delivered similar trends. An important limitation, however, is that I do not yet have a true ground-truth benchmark for validating the product-level labels. The classification should therefore be understood as a systematic but imperfect measurement exercise.
+Several runs of the classification procedure have yielded broadly stable results, particularly for the aggregate patterns that are the focus of the paper. As a further cross-check, an earlier version of the project used a keyword-matching procedure, based on a list of AI-infrastructure-related materials and products that was then matched to HS descriptions. While that approach was much coarser than the LLM-based classification, it delivered similar trends. An important limitation, however, is that I do not yet have a ground-truth benchmark for validating the product-level labels. The classification should therefore be understood as a systematic but imperfect measurement exercise.
 
 \afterpage{%
 \clearpage
@@ -237,7 +237,7 @@ Tables \ref{tab:top10_high_relevance_landscape} and \ref{tab:top11to20_high_rele
 \caption{U.S. Imports of AI and non-AI products}\label{fig:ai-trade-index}
 \end{figure}
 
-While the top 10 list is dominated by computer hardware and networking equipment, other notable products also appear. In particular, {\tt 7403110000} (refined copper cathodes) is the sixth most important product. The LLM reasoning is that refined copper cathodes are a key input into copper products (e.g., electrical wire) used in data centers. Similarly, insulated fiber optic cables ({\tt 8544700000}) appear in the top 20, classified under Networking Telecom | the physical backbone connecting GPU clusters. These are products that would be missed entirely by approaches that focus on a narrow set of semiconductor codes, but they are clearly part of the AI buildout.
+While the top 10 list is dominated by computer hardware equipment, other notable products also appear. In particular, {\tt 7403110000} (refined copper cathodes) is the sixth most important product. The LLM reasoning is that refined copper cathodes are a key input into copper products (e.g., electrical wire) used in data centers. Similarly, insulated fiber optic cables ({\tt 8544700000}) appear in the top 20, classified under Networking Telecom | the physical backbone connecting GPU clusters. Approaches to measure the importance of trade in AI-related products by focusing on a narrow set of semiconductor codes would be miss these products entirely. 
 
 In looking through Table \ref{tab:trade_hierarchical} or \ref{tab:top10_high_relevance_landscape}, one cannot help but notice the dramatic growth in trade volumes in nearly all categories. I discuss this growth next.
 
@@ -253,9 +253,9 @@ Where is the growth coming from? Return to the final column of Table \ref{tab:tr
 
 Moreover, this growth is not simply driven by Compute Hardware. Even after excluding Compute Hardware, AI-relevant imports have grown by \aiRelevantExComputeGrowth{} percent since 2023. This is precisely the kind of pattern that would be invisible under a narrower classification focused on semiconductors and processors alone.
 
-The black and red lines report aggregate trade and non-AI-relevant products. The latter series is the index computed for all \textbf{Low} products. In aggregate, trade has grown in 2025 by \totalTradePctChange{} percent relative to 2023. This aggregate growth is surprisingly strong given that U.S. tariffs increased by more than ten percentage points in 2025. However, this aggregate growth is driven by the spectacular growth in AI-relevant products.
+The black and red lines in Figure \ref{fig:ai-trade-index} report aggregate trade and non-AI-relevant products. The latter series is the index computed for all \textbf{Low} products. In aggregate, trade has grown in 2025 by \totalTradePctChange{} percent relative to 2023. This aggregate growth is surprisingly strong given that U.S. tariffs increased by more than ten percentage points in 2025. However, this aggregate growth is driven by the spectacular growth in AI-relevant products.
 
-Once AI-related products are stripped out, the picture changes dramatically. Non-AI-relevant imports as of \lastObsDate{} are \notAiRelevantDecline{} percent below the typical month in 2023. On a year-over-year basis, Table \ref{tab:trade_hierarchical} reports that non-AI-relevant products grew by only \lowAiPctChange{} percent, and much of this growth owes to the front-running of tariffs in early 2025.
+Once AI-related products are stripped out, the picture changes. Non-AI-relevant imports as of \lastObsDate{} are \notAiRelevantDecline{} percent below the typical month in 2023. On a year-over-year basis, Table \ref{tab:trade_hierarchical} reports that non-AI-relevant products grew by only \lowAiPctChange{} percent, and much of this growth owes to the front-running of tariffs in early 2025.
 
  \begin{figure}[t]
 \centering
@@ -279,13 +279,13 @@ Figure \ref{fig:ai-trade-country-catagoy} breaks down the country composition by
 
 A final surprising feature is the small and diminishing role of China. Figure \ref{fig:ai-trade-country} shows that Taiwan and China held similar shares in 2023, but the two have diverged since then. Now China's share of AI-relevant products is comparable to Vietnam and Thailand. 
 
-This breakdown by source and product illustrates why a broad classification of AI-relevant goods matters. A narrow focus on chips alone would suggest that AI trade is primarily a U.S.–Taiwan story. Figure \ref{fig:ai-trade-country-catagoy} shows it is much broader | and puts the focus squarely on Mexico.
+This breakdown by source and product illustrates why a broad classification of AI-relevant goods matters. A narrow focus on chips alone would suggest that AI trade is primarily a U.S.–Taiwan story. Figure \ref{fig:ai-trade-country-catagoy} shows it is much broader and it highlights the importance of Mexico.
 
 To this last point, Mexico's role in AI-related trade helps explain some puzzling features of trade within the USMCA over 2025. Both Canada and Mexico essentially had the same tariff treatment over the course of 2025. Yet, U.S. imports from Canada changed by \canadaTotalImportGrowthTwentyFiveVsTwentyFour{} percent while U.S. imports from Mexico rose by \mexicoTotalImportGrowthTwentyFiveVsTwentyFour{} percent. A lot of this divergence reflects the \mexicoHighAiImportGrowthTwentyFiveVsTwentyFour{} percent growth in Mexican AI-related exports to the U.S.
 
 \section{How has trade policy treated AI-related products?}\label{sec:ai-tariffs}
 
-Figure \ref{fig:ai-tariffs} plots effective tariff rates | duties as a share of import value | for AI-related and non-AI-related products. In 2024, the gap between the two was modest: \tariffHighTwentyFour{} percent for \textbf{High} products versus \tariffLowTwentyFour{} percent for \textbf{Low} products. By 2025, with the broad increase in U.S. tariffs, both rates rose | but the gap widened substantially. AI-related products face an effective rate of \tariffHighTwentyFive{} percent, compared with \tariffLowTwentyFive{} percent for non-AI products.
+Figure \ref{fig:ai-tariffs} plots effective tariff rates (duties relative to import value) for AI-related and non-AI-related products. In 2024, the gap between the two was modest: \tariffHighTwentyFour{} percent for \textbf{High} products versus \tariffLowTwentyFour{} percent for \textbf{Low} products. By 2025, with the broad increase in U.S. tariffs, both rates rose, but the gap widened substantially. AI-related products face an effective rate of \tariffHighTwentyFive{} percent, compared with \tariffLowTwentyFive{} percent for non-AI products.
 
 \begin{figure}[t]
 \centering
@@ -299,7 +299,7 @@ Why are tariffs lower on AI-related products? The answer is exemptions. Several 
 \begin{enumerate}
 \item the Consumer Electronics amendment to IEEPA Executive Order 14257 (April 11, 2025);
 \item the Annex II list from the same executive order; and
-\item the Section 122 Surcharge exemptions (February 2026), which were put in place after IEEPA tariffs | and their associated exemptions | were removed.
+\item the Section 122 Surcharge exemptions (February 2026), which were put in place after IEEPA tariffs, and their associated exemptions, were removed.
 \end{enumerate}
  
 \afterpage{%
@@ -314,7 +314,7 @@ The category-level pattern in exemptions helps explain the cross-category variat
 
 \section{U.S. Exports of AI-Related Products}\label{sec:facts-exports}
 
-The massive growth in trade in AI-related products is not isolated to the import side. Figure \ref{fig:ai-exports-index} plots the export-side analog of Figure \ref{fig:ai-trade-index}. The pattern mirrors the import side: AI-relevant exports have diverged sharply from non-AI exports since mid-2024. The divergence is somewhat less dramatic, but the trend is clear and as of \lastObsDate{}, AI-related exports grew by \aiExportGrowth{} percent since 2023, led by Compute Hardware (+\computeHardwareExportGrowth{} percent). While import growth is stronger | reflecting the U.S. as a net importer of AI products | the export side confirms that trade in AI-related products is not one-sided.
+The massive growth in trade in AI-related products is not isolated to the import side. Figure \ref{fig:ai-exports-index} plots the export-side analog of Figure \ref{fig:ai-trade-index}. The pattern mirrors the import side: AI-relevant exports have diverged sharply from non-AI exports since mid-2024. The divergence is somewhat less dramatic, but the trend is clear and as of \lastObsDate{}, AI-related exports grew by \aiExportGrowth{} percent since 2023, led by Compute Hardware (\computeHardwareExportGrowth{} percent). While import growth is stronger, the export side confirms that trade in AI-related products is not one-sided.
 
 Mexico is an important destination for U.S. exports of AI-related products. In 2025, Mexico accounted for about 32 percent of all U.S. exports of \textbf{High} AI-relevant products, making it the single largest destination by a wide margin. What is striking is how broad-based Mexico's role is. Mexico is the leading destination for Compute Hardware exports (33 percent), Electrical Power exports (36 percent), and Networking Telecom exports (19 percent), and it is the second-largest destination for Cooling HVAC exports (25 percent). This breadth across categories mirrors the import-side pattern documented in Section \ref{sec:where-does-ai-come-from} and underscores that the U.S.-Mexico trade relationship in AI-related products extends well beyond any single product type.
 
@@ -326,7 +326,7 @@ Mexico is an important destination for U.S. exports of AI-related products. In 2
 
 How exports should respond to a large demand shock like the AI-investment boom is not obvious. One might expect a form of ``venting in'' | the U.S. demand shock redirecting exports inward, akin to \citet*{almunia2018venting} but in reverse. Yet the data show the opposite: AI-related exports are expanding sharply alongside imports.
 
-The fact that we see exports of AI-related products expanding so much is suggestive that the U.S. may play an important role in AI global value chains. This pattern is also consistent with AI-related materials coming into the U.S., being exported to Mexico for assembly or processing, and then shipped back to the U.S. And if so, little value is actually being added domestically. This is a question that would require data on trade in value added.
+The fact that we see exports of AI-related products expanding so much is suggestive that the U.S. may play an important role in AI global value chains. This pattern is also consistent with the U.S. being an entrep\^{o}t. That is AI-related materials coming into the U.S., exported to Mexico for assembly or processing, and then shipped back to the U.S. And if so, little value is actually being added domestically. This is a question that would require data on trade in value added.
 
 \section{AI's Impact on the Trade Deficit}\label{sec:trade-deficit}
 
@@ -342,7 +342,7 @@ I illustrate this point through a simple accounting exercise to quantify the AI 
 
 To answer this question I proceed in three steps. First, I compute non-AI growth indices for both imports and exports | the growth rates of the red lines in Figures \ref{fig:ai-trade-index} and \ref{fig:ai-exports-index}. I treat these as the counterfactual growth rates that would have prevailed absent the AI boom. Second, starting from 2023 trade levels for AI-related products, I apply these counterfactual growth rates to construct counterfactual AI series. Finally, I define excess AI trade as the gap between actual and counterfactual AI trade.
 
-Table \ref{tab:counterfactual_summary} reports the results. In 2025, excess AI imports amount to \$\cfExcessAiImports{} billion, while excess AI exports are \$\cfExcessAiExports{} billion | the net effect is \$\cfNetAiEffect{} billion. In other words, the goods trade deficit would have been nearly \$200 billion smaller absent the AI boom. The actual U.S. goods trade deficit in 2025 was \$\cfActualDeficit{} billion; without the AI boom it would have been \$\cfCounterfactualDeficit{} billion. Absent the AI data center buildout, the goods trade deficit would have been nearly \cfDeficitReductionPct{} percent smaller.
+Table \ref{tab:counterfactual_summary} reports the results. In 2025, excess AI imports amount to \$\cfExcessAiImports{} billion, while excess AI exports are \$\cfExcessAiExports{} billion | the net effect is \$\cfNetAiEffect{} billion. In other words, the goods trade deficit would have been nearly \$200 billion smaller absent the AI boom. The actual U.S. goods trade deficit in 2025 was \$\cfActualDeficit{} billion; without the AI boom it would have been \$\cfCounterfactualDeficit{} billion. So, absent the AI data center buildout, the goods trade deficit would have been nearly \cfDeficitReductionPct{} percent smaller.
 
 At a high level, this result illustrates that trade in AI-related products is a very important force behind U.S. trade over the past year. In fact, it might be even more important than dramatic changes in U.S. trade policy in 2025. With that said, this exercise is merely an accounting exercise and it leaves out many details to consider. In \citet*{ferrante2026missingtrade}, we employ a structural approach and use a model to tease out the underlying effects of tariffs, exchange rates, and AI-investment-specific shocks on macro aggregates. 
 
@@ -354,9 +354,9 @@ The main input into my analysis was the use of an LLM-classification procedure t
 
 There are several open questions for future research. The most natural area for improvement is the classification list itself. While the items are plausible and the aggregate trends are sensible, incorporating additional information sources and formal validation would strengthen the foundation.
 
-Another question regards prices versus quantities. Using unit values from the underlying trade data might be a path forward on this dimension. The inflationary impacts of the AI boom are interesting as well, given evidence suggesting substantial price effects.
+Another question regards prices versus quantities. Using unit values from the underlying trade data might be a path forward on this dimension. The inflationary impacts of the AI boom are interesting as well.
 
-A broader question is about trade in capital goods. Models of trade often abstract from capital or the durable nature of the goods being traded (\citet{eaton2001capital}, \citet{eaton2016trade}, \citet{ravikumar2019capital} are notable exceptions). Most of the AI-related products are classified as capital goods. Understanding how large, concentrated capital-goods booms (or busts) propagate through trade is an important area for future work.
+A broader question is about trade in capital goods. Models of trade often abstract from capital or the durable nature of the goods being traded (\citet{eaton2001capital}, \citet*{eaton2016trade}, \citet*{ravikumar2019capital} are notable exceptions). Most of the AI-related products are classified as capital goods. Understanding how large, concentrated capital-goods booms (or busts) propagate through trade is an important area for future work.
 
 Finally, the finding that tariff exemptions have disproportionately shielded AI-related products raises a forward-looking question: as trade policy in the U.S. continues to evolve, whether these exemptions persist has important implications for the cost and pace of the AI buildout.
 
