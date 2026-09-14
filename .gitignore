@@ -227,3 +227,6 @@ data-input/*.parquet
 *.toc
 *.nav
 *.snm
+
+# Superseded data vintages kept locally
+data-input/vintage-*/

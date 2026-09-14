@@ -1,0 +1,549 @@
+\documentclass[10pt,pdftex,aspectratio=169]{beamer}
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{color}
+\usepackage{hyperref}
+\usepackage{subfigure}
+\usepackage{tabularx}
+\usepackage{ragged2e}
+\usepackage{booktabs}
+\usepackage{multirow}
+\usepackage{natbib}
+\usepackage{pdfpages}
+\usepackage{tikz}
+\usepackage[absolute,overlay]{textpos}
+
+\usecolortheme{dolphin}
+\linespread{1.3}
+\definecolor{nblue}{RGB}{0,0,128}
+
+\bibliographystyle{ecta}
+\setbeamercovered{transparent}
+
+\newcolumntype{Y}{>{\RaggedRight\arraybackslash}X}
+%\setbeamerfont{alerted text}{series=\bfseries}
+
+\hypersetup{colorlinks=true, linkcolor=nblue,
+citecolor=nblue, urlcolor=nblue, bookmarks=false,
+pdfpagemode=UseNone,
+pdfstartview={XYZ null null 1.25},
+pdftitle={The Consumption Response to Trade Shocks: Evidence from the US-China Trade War},
+pdfauthor={ Michael E. Waugh},
+pdfkeywords={economics, trade, dynamics, quant econ, consumption, data science, cars, waugh, incomplete markets, inequality, Ricardo, julia, migration, China, trade war, tariffs }}
+
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}[frame number]
+\setbeamertemplate{theorems}[numbered]
+\setbeamertemplate{itemize subitem}[circle]
+\setbeamertemplate{enumerate items}[default]
+
+\setbeamerfont{frametitle}{size= \Large}
+\setbeamerfont{ framesubtitle }{size = \footnotesize}
+
+\setbeamertemplate{frametitle}{
+  \vspace{0.20em}
+   \centering
+    {\LARGE \color{black}\insertframetitle\par}
+  \vspace{0.25em}
+}
+\setbeamertemplate{items}[circle]
+\setbeamertemplate{itemize subitem}[circle]
+
+\theoremstyle{definition}
+
+
+\newtheorem{as}{Assumption}
+\newtheorem{df}{Definition}
+\newtheorem{lm}{Lemma}
+\newtheorem{prp}{Proposition}
+
+\usepackage[normalem]{ulem}
+\newcommand\redout{\bgroup\markoverwith
+{\textcolor{red}{\rule[.5ex]{1pt}{1pt}}}\ULon}
+
+\makeatletter
+\def\blfootnote{\xdef\@thefnmark{}\@footnotetext}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\title{\Large Tariffs}
+\institute[Foo and Bar]{\normalsize\begin{tabular}[h]{c}
+Michael E. Waugh  \\
+Federal Reserve Bank of Minneapolis\blfootnote{The views expressed herein are those of myself and not necessarily those of the Federal Reserve Bank of Minneapolis or the Federal Reserve System.} and NBER\\
+\href{https://www.tradewartracker.com}{www.tradewartracker.com}\\
+\href{https://X.com/tradewartracker}{@tradewartracker}
+\end{tabular}}
+
+\date{\today}
+
+\begin{document}
+
+
+\begin{frame}
+\titlepage
+\setcounter{framenumber}{0}
+\section{}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t]
+\large
+\bigskip
+\bigskip
+\bigskip
+\only<1->{
+{\Large \centerline{Since Jan 20th, the US  average tariff rate has increased 5X.}}}
+\medskip
+\bigskip
+\bigskip
+\only<2->{\large
+\textbf{1.} What are the economic rationales for a tariff?\\
+\bigskip
+\bigskip
+\textbf{2.} What happened when the US imposed tariffs on China in 2018?\\
+\bigskip
+\bigskip
+\textbf{3.} What is happening now?}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{frame}[t]{Economic rationales for a tariff}
+\centerline{\Large \textbf{``I want a better deal\ldots''}}
+\bigskip
+\end{frame}
+
+\begin{frame}[t]{Economic rationales for a tariff}
+\centerline{\Large\textbf{``I want a better deal\ldots''}}
+\bigskip
+Most basic (and perhaps the \emph{only}) rational for a tariff is to manipulate the terms-of-trade in ones favor, i.e., how much of your stuff I get for my stuff.
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{itemize}
+\item Similar to monopoly pricing:\\ use tariffs to make its products relatively more valuable by restricting the demand.
+\medskip
+\item There can be too much of this $\Rightarrow$\\ optimal tariff argument.
+\end{itemize}
+\end{column}
+      % Second column: Figure
+\begin{column}{0.5\textwidth}
+\vspace{.5cm}
+            \centering
+            \includegraphics[scale = 0.33]{./figures/welfare_vs_tariff.png}
+        \end{column}
+\end{columns}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{frame}[t]{Economic rationales for a tariff}
+\centerline{\Large \textbf{``I want a better deal\ldots for my friends.''}}
+\bigskip
+Now the government manipulates prices to favor some at expense of others.
+\vskip -1cm
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{itemize}
+\item Very intuitive\ldots continual discussion of steel and aluminum fits well with this idea.
+\medskip
+\item Relevant even if there are no terms-of-trade motives.
+\end{itemize}
+\end{column}
+      % Second column: Figure
+\begin{column}{0.5\textwidth}
+    \vskip 2cm
+            \centering
+            \includegraphics[scale = 0.11]{./figures/protection-for-sale.png}
+        \end{column}
+\end{columns}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t]{What aboutisim}
+\centerline{\Large We hear a lot of other economic rationale for tariffs put forward.}
+\bigskip
+\bigskip
+My view: often this ``what aboutisim'' is related to either
+\begin{itemize}
+\smallskip
+\item[i] different weighting of actors in the economy,
+\smallskip
+\item[ii] missing instruments (principle of targeting).
+\end{itemize}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t]{What about more revenue?}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{itemize}
+\item \textbf{Local Trump supporter}: ``What about that we need tariffs to raise revenue?''
+\medskip
+\item \textbf{You}: This is just a different social welfare function. And why not other taxes?
+\end{itemize}
+\end{column}
+\begin{column}{0.5\textwidth}
+\vskip 1cm
+            \centering
+            \includegraphics[scale = 0.15]{./figures/maga.jpg}
+\end{column}
+\end{columns}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t]{What about supporting industries we care about?}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{itemize}
+\item \textbf{Local Kamala supporter (my mom btw)}: ``I want to support green energy industries.''
+\medskip
+\item \textbf{Me}: Why is a tariff a good tool for this?
+\end{itemize}
+\end{column}
+\begin{column}{0.5\textwidth}
+\vskip 0.5cm
+            \centering
+            \includegraphics[scale = 0.25]{./figures/mom.jpg}
+        \end{column}
+    \end{columns}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t]{What about building things?}
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{itemize}
+\item \textbf{Local global elite}: `` I think we would be better off if we spend a few thousand dollars more for a car in return for having a workforce that can make things.''
+\medskip
+\item \textbf{You}: Why is a tariff a good tool? Why not bring shop-class back to high school?
+\end{itemize}
+\end{column}
+\begin{column}{0.5\textwidth}
+\vskip .05cm
+            \centering
+            \includegraphics[scale = 0.45]{./figures/goldman.png}
+\end{column}
+\end{columns}
+
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t]{What could go wrong?}
+\centerline{\Large The US does not have control over other countries trade policy.}
+\bigskip
+\only<2>{
+\begin{columns}
+\begin{column}{0.5\textwidth}
+\begin{itemize}
+\item \textbf{Local Trump supporter}: ``Things seemed pretty good back in 2018-2019\ldots''
+\medskip
+\item \textbf{Question 2:} What happened when the US imposed tariffs on China (and other countries) in 2018?
+\end{itemize}
+\end{column}
+
+        % Second column: Figure
+\begin{column}{0.5\textwidth}
+\vskip 1cm
+            \centering
+            \includegraphics[scale = 0.15]{./figures/maga.jpg}
+        \end{column}
+    \end{columns}
+}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+\begin{frame}[t]{The US-China trade war in 2018/19}
+\begin{figure}[t]
+\centerline{\includegraphics[scale = 0.36]{./figures/tariffs_time.pdf}}
+\end{figure}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t]{What were the effects of tariffs in 2018/19?}
+\textbf{Problem:} Hard to tell at a macro-level because other things were happening.
+\begin{itemize}
+\smallskip
+\item TCJA (Tax Cuts and Jobs Act) went into law on Jan 2018.
+\smallskip
+\item Federal Reserve was entering into a tightening cycle.
+\end{itemize}
+\bigskip
+\begin{table}[h]
+    \centering
+    \setlength {\tabcolsep}{4.5mm}
+    \renewcommand{\arraystretch}{1.40}
+    \begin{tabular}{l | c c}
+
+        \ & 2018 & 2019 \\
+        \midrule
+        GDP growth & 2.9 & 2.3 \\
+        Job per month & 223K & 176K \\
+    \end{tabular}
+\end{table}
+\bigskip
+\only<2->{
+\textbf{Solution:} Compare US regions that were more exposed to less exposed to tariff changes\ldots\\}
+\end{frame}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t]
+\begin{figure}
+\centerline{\includegraphics[scale = 0.35]{../BOD-talk/figures/map-china-exposure.png}}
+\end{figure}
+\begin{textblock*}{5cm}(3.5cm,8.35cm) % adjust position as needed
+  {\footnotesize {Source: Waugh (2025)}}
+\end{textblock*}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{frame}[t]\frametitle{U.S. Soybean Exports Collapsed in 2018/19}
+\begin{figure}
+\centerline{\includegraphics[scale = 0.38]{../BOD-talk/figures/soybean-exports-exp.pdf}}
+\end{figure}
+\begin{textblock*}{5cm}(1.5cm,8.5cm) % adjust position as needed
+  {\footnotesize {Source: Census}}
+\end{textblock*}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t]\frametitle{2018/19: Retaliation $\Rightarrow$ Less Employment}
+\begin{figure}
+\centerline{\includegraphics[scale = 0.34]{../BOD-talk/figures/retaliation-emp.pdf}}
+\end{figure}
+\begin{textblock*}{5cm}(3.5cm,7.5cm) % adjust position as needed
+  {\footnotesize {Source: Waugh (2025)}}
+\end{textblock*}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t]\frametitle{2018/19: Retaliation $\Rightarrow$ Less Expenditure}
+\begin{figure}
+\centerline{\includegraphics[scale = 0.35]{../BOD-talk/figures/retaliation-cars.pdf}}
+\end{figure}
+\begin{textblock*}{5cm}(3.5cm,7.5cm) % adjust position as needed
+  {\footnotesize {Source: Waugh (2025)}}
+\end{textblock*}
+\end{frame}
+
+\begin{frame}[t]\frametitle{What were the effects of tariffs in 2018/19?}
+\large \centerline{Chinese retaliatory tariffs were harmful for those exposed (Waugh 2025).}
+\bigskip\only<2->{
+\centerline{US tariffs were harmful due to supply-chains issue (Flaaen and Pierce 2024).}}
+\bigskip\only<3->{
+\centerline{Cost of tariff was completely passed through into prices (many papers).}}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t]{What is happening now?}
+\centerline{\Large \textbf{Lots of stuff}}
+\bigskip
+\large \centerline{Fentanyl tariffs on China, Canada, Mexico}
+\bigskip
+\centerline{Sector specific tariffs on steel, aluminum, auto / auto parts}
+\bigskip
+\centerline{Reciprocal tariffs on all countries | on pause at 10\% for 90 days}
+\end{frame}
+
+
+
+\begin{frame}[t]\frametitle{Tariffs prior to May 12th}
+\begin{figure}
+\centerline{\includegraphics[scale = 0.39]{../BOD-talk/figures/average-tariffs.pdf}}
+\end{figure}
+\begin{textblock*}{5cm}(1.25cm,7.5cm) % adjust position as needed
+  {\footnotesize {Source: BEA, NIPA Table 3.5}}
+\end{textblock*}
+\end{frame}
+
+
+\begin{frame}[t]\frametitle{Tariffs now}
+\begin{figure}
+\centerline{\includegraphics[scale = 0.39]{../BOD-talk/figures/average-tariffs-swiss.pdf}}
+\end{figure}
+\begin{textblock*}{5cm}(1.25cm,7.5cm) % adjust position as needed
+  {\footnotesize {Source: BEA, NIPA Table 3.5}}
+\end{textblock*}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{frame}[t]
+\large
+\bigskip
+\bigskip
+\bigskip
+{\LARGE \centerline{\textbf{Questions?}}}
+\end{frame}
+
+
+
+
+\appendix
+
+\newcounter{finalframe}
+\setcounter{finalframe}{\value{framenumber}}
+
+%\begin{frame}[allowframebreaks]
+%\frametitle{References}
+%\scriptsize
+%\bibliography{../bibtex/micro_price_bibtex}
+%\end{frame}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%\begin{frame}[t]{Summary Statistics}
+%\footnotesize
+%\vspace{-.5cm}
+%\begin{table}[t]
+%\setlength {\tabcolsep}{1.75mm}
+%\renewcommand{\arraystretch}{2.25}
+%\begin{center}
+%\begin{tabular}{l c c c c c c c}
+%\multicolumn{8}{c}{\small \textbf{Summary Statistics: Tariffs, Autos, Trade, Employment (Sorted on China Tariff)}}\\
+%\hline
+%\hline
+%\footnotesize  $\Delta$ Tariff Quartile
+%& \footnotesize  $\Delta$ China Tariff
+%& \footnotesize  $\Delta$ US Tariff
+%& \footnotesize Autos
+%& \footnotesize Total Emp.
+%& \footnotesize Goods Emp.
+%& \footnotesize Population
+%& \footnotesize MFP per person \\
+%\hline
+%\footnotesize  Upper quartile       & 3.60  & 2.07  & 1,246  & 9,776 & 3,570 & 32,963  & 95.0 \\
+%\footnotesize  25th-75th quartiles  & 0.95  &0.97   & 7,735  & 52,311 & 9,245 & 138,896 & 21.0 \\
+%\footnotesize  Bottom quartile      & 0.10  &0.40   & 5,443  & 38,331 & 4,715 & 100,452  & 14.7 \\
+%\hline
+%\footnotesize Average               & 1.39  & 1.10  & 5,524  & 38,075 & 6,678 & 102,518 & 26.2 \\
+%\footnotesize Number of Counties &  3,122 \\
+%\hline
+%\end{tabular}
+%\parbox[c]{5.5in}{\vspace{.1cm}
+%{\footnotesize \textbf{Note:} All values are for the year 2017; $\Delta$ Tariff is the change in the tariff between end of March 2017 and end of April 2019. Population and Income are from the American Community Survey.
+%Employment data from \href{https://www.bls.gov/cew/}{BLS's Quarterly Census of Employment and Wages}. Good employment equals natural resources, manufacturing, and construction.}}
+%\end{center}
+%\end{table}
+%
+%\end{frame}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%
+%\begin{frame}[t]
+%\frametitle{Unclear/Mixed Evidence on Benefits from US Tariffs}
+%\begin{table}[t]
+%\footnotesize
+%\setlength {\tabcolsep}{4.05mm}
+%\renewcommand{\arraystretch}{2.30}
+%\begin{center}
+%%\textbf{\caption{Auto Sales Growth}\label{tb:auto_growth}}
+%%\vspace{.1cm}
+%\begin{tabular}{l c c }
+%\multicolumn{3}{c}{\small \textbf{US Tariffs, Auto Sales Growth, Pre and Post}}\\
+%\hline
+%\hline
+%\footnotesize  US Tariff Quartile & \footnotesize  Pre-Trade War &  \footnotesize  Post-Trade War\\
+%\hline
+%\footnotesize  Upper quartile  & $\begin{array}{c}0.0041 \vspace{-.45cm}\\ \scriptstyle [ \ 0.002 \ ]\end{array}$   & $\begin{array}{c}-0.0224 \vspace{-.45cm}\\ \scriptstyle [ \ 0.004 \ ]\end{array}$ \\
+%\footnotesize  Bottom quartile  & $\begin{array}{c}0.0137 \vspace{-.45cm}\\ \scriptstyle [ \ 0.003 \ ]\end{array}$  & $\begin{array}{c}-0.0211\vspace{-.45cm}\\ \scriptstyle [ \ 0.004 \ ]\end{array}$\\
+%\hline
+%\end{tabular}
+%\parbox[c]{3.1in}{\vspace{.1cm}
+%{\footnotesize \textbf{Note:} Values  are 12-month log differences averaged across counties and time periods. Pre-Trade War is January 2017 to end of June 2018; Post-Trade War is July 2018-April 2019. Standard errors are reported in brackets.}}
+%\end{center}
+%\end{table}
+%\end{frame}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%
+%\begin{frame}[t]
+%\frametitle{Unclear/Mixed Evidence on Benefits from US Tariffs}
+%\begin{figure}[t]
+%\centerline{\includegraphics[scale = 0.38]{../figures/oct2020-figs/simple_county_by_quantile_us.pdf}}
+%\end{figure}
+%\end{frame}
+%
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%\begin{frame}[t]
+%\frametitle{Detail of my MFP Data\ldots}
+%\begin{figure}[t]
+%\centerline{\includegraphics[scale = 0.5]{../figures/oct2020-figs/mfp1.png}}
+%\end{figure}
+%\end{frame}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%\begin{frame}[t]
+%\frametitle{Top Recipients: Corporate Farms Spanning Multiple States\ldots}
+%\begin{figure}[t]
+%\centerline{\includegraphics[scale = 0.5]{../figures/oct2020-figs/mfp2.png}}
+%\end{figure}
+%\end{frame}
+
+
+
+
+
+\setcounter{framenumber}{\value{finalframe}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\end{document} 
