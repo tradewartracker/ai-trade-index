@@ -2,19 +2,21 @@
 
 For technical documentation on the repository structure, data pipeline, and how to reproduce the analysis, see [TECHNICAL-README.md](TECHNICAL-README.md).
 
-**Paper:** [Trade in AI-Related Products (PDF)](paper/ai-trade.pdf)
+**Paper:** [Trade in AI-Related Products (PDF)](paper/published/ai-trade.pdf), published in the Federal Reserve Bank of Minneapolis *Quarterly Review*, June 2026. The as-published version, with its figures, tables and LaTeX source, is frozen in [paper/published/](paper/published/).
 
-**Abstract.** This paper documents facts about international trade in AI-related products. I develop a large language model (LLM) classification tool that maps HS10 codes in U.S. trade data to inputs used in the construction and operation of AI infrastructure. AI-related products account for 23 percent of U.S. imports in 2025, and these products have grown by 73 percent since 2023. Over this same time period, non-AI-related products have grown by only 3 percent, with the divergence between the two categories beginning in early 2024. U.S. exports of AI-related products have been abnormally strong as well. Mexico is a key market for both the import and export side, and along with Taiwan these two countries account for about half of all AI trade. A simple accounting exercise suggests that the U.S. goods trade deficit would have been nearly $200 billion smaller in 2025 absent trade in AI-related products.
+**Abstract.** This paper documents facts about international trade in AI-related products. I develop a large language model (LLM) classification tool that maps HS10 codes in U.S. trade data to products used in the construction and operation of AI infrastructure. AI-related products account for 23 percent of U.S. imports in 2025, and imports of these products have grown by 73 percent since 2023. Over the same period, imports of non-AI-related products have grown by only 3 percent, with the divergence between the two categories beginning in early 2024. Mexico is a key market on both the import and export side, and together with Taiwan these two countries account for about half of all U.S. trade in AI-related products. Trade policy has treated these products lightly with product-level exemptions shielding much of AI-related imports from tariffs. Absent the AI boom, a simple accounting exercise suggests that the U.S. goods trade deficit would have been nearly $200 billion smaller in 2025.
 
 
 > **Citation:** If you use or quote this data, please cite as:
 >
-> Waugh, Michael E. "Trade in AI-Related Products." Working Paper, Federal Reserve Bank of Minneapolis, March 2026.
+> Waugh, Michael E. 2026. "Trade in AI-Related Products." Federal Reserve Bank of Minneapolis *Quarterly Review* 46 (1), June. https://doi.org/10.21034/qr.4612
 
 
 ---
 
-This document walks key findings from my paper "Trade in AI-Related Products." The analysis uses an LLM-based classification tool to identify which of the roughly 18,364 HS10 commodity codes in U.S. trade data are related to AI data center infrastructure. The classification methodology is documented in [HS10_CLASSIFIER_DOCUMENTATION.md](HS10_CLASSIFIER_DOCUMENTATION.md), and a full listing of high-relevance products is available in [AI_TRADE_HIGH_RELEVANCE_PRODUCTS.md](AI_TRADE_HIGH_RELEVANCE_PRODUCTS.md). Trade data comes from the U.S. Census Bureau and covers monthly flows from 2013 through January 2026.
+> **Numbers as of the published version.** Every number and figure below is from the paper as published in June 2026, using Census data through March 2026. The repository keeps moving after publication; [Section 8](#8-how-this-repository-evolves) explains how, and [REFRESH-LOG.md](REFRESH-LOG.md) records the current data vintage and how the headline numbers have changed since.
+
+This document walks key findings from my paper "Trade in AI-Related Products." The analysis uses an LLM-based classification tool to identify which of the roughly 18,364 HS10 commodity codes in U.S. trade data are related to AI data center infrastructure. The classification methodology is documented in [HS10_CLASSIFIER_DOCUMENTATION.md](HS10_CLASSIFIER_DOCUMENTATION.md), and a full listing of high-relevance products is available in [AI_TRADE_HIGH_RELEVANCE_PRODUCTS.md](AI_TRADE_HIGH_RELEVANCE_PRODUCTS.md). Trade data comes from the U.S. Census Bureau and covers monthly flows from 2013 through March 2026.
 
 **Contents**
 
@@ -24,7 +26,8 @@ This document walks key findings from my paper "Trade in AI-Related Products." T
 4. [Tariffs Are Lower on AI-Related Products](#4-tariffs-are-lower-on-ai-related-products)
 5. [U.S. Exports of AI-Related Products](#5-us-exports-of-ai-related-products)
 6. [Counterfactual: AI's Impact on the Trade Deficit](#6-counterfactual-ais-impact-on-the-trade-deficit)
-7. [Data and Code](#data-and-code)
+7. [Data and Code](#7-data-and-code)
+8. [How This Repository Evolves](#8-how-this-repository-evolves)
 
 ---
 
@@ -72,15 +75,15 @@ The top 10 list is dominated by compute hardware and networking equipment, but a
 
 ### Import Growth Index (2023 = 100)
 
-![U.S. Imports of AI and non-AI products](paper/figures/ai-trade-index.png)
+![U.S. Imports of AI and non-AI products](paper/published/figures/ai-trade-index.png)
 
-This is the central result. The blue line shows imports of AI-relevant (High) products indexed to 2023 monthly averages. As of January 2026, the AI-relevant index stands at **211** --- meaning import volumes are more than double the typical month in 2023. By contrast, non-AI-relevant products (red line) have an index of **86**, meaning they have contracted. The aggregate index (black) is at **104**, and this modest overall growth is entirely a byproduct of the AI boom.
+This is the central result. The blue line shows imports of AI-relevant (High) products indexed to 2023 monthly averages. As of March 2026, the AI-relevant index stands at **250** --- meaning import volumes are two and a half times the typical month in 2023. By contrast, non-AI-relevant products (red line) have an index of **96**, meaning they have contracted. The aggregate index (black) is at **121**, and this overall growth is entirely a byproduct of the AI boom.
 
 The timing is notable: through early 2024, AI and non-AI products tracked each other closely. The divergence begins in mid-2024 and accelerates sharply through 2025.
 
 ### AI Share of Total U.S. Imports
 
-![Share of AI-Related Imports in Total](paper/figures/ai-trade-share.png)
+![Share of AI-Related Imports in Total](paper/published/figures/ai-trade-share.png)
 
 AI-related products have grown from **15%** of total imports in 2023 to **17%** in 2024 and **23%** in 2025 --- an increase of 8 percentage points in two years. Nearly a quarter of all U.S. imports are now AI-related.
 
@@ -90,11 +93,11 @@ AI-related products have grown from **15%** of total imports in 2023 to **17%** 
 
 ### Top Sources of AI-Related Products
 
-![Top sources of AI-related products](paper/figures/ai-by-country.png)
+![Top sources of AI-related products](paper/published/figures/ai-by-country.png)
 
 Mexico and Taiwan each account for roughly a quarter of all high-relevance AI trade. Mexico's prominence is perhaps the most surprising finding --- it has consistently held about 25% market share across all years. Taiwan's role is more expected given its dominance in semiconductor manufacturing, and its share has been increasing through 2025.
 
-![Top sources by AI product category](paper/figures/ai-by-country-category.png)
+![Top sources by AI product category](paper/published/figures/ai-by-country-category.png)
 
 Mexico leads in two of the top four product categories and ranks second in every other. Taiwan's prominence is concentrated in Compute Hardware, where it is the leading source.
 
@@ -106,16 +109,16 @@ China has declined in importance, falling from a position comparable to Taiwan i
 
 ## 4. Tariffs Are Lower on AI-Related Products
 
-![Tariff rates on AI and non-AI products](paper/figures/ai-tariffs.png)
+![Tariff rates on AI and non-AI products](paper/published/figures/ai-tariffs.png)
 
 Effective tariff rates (duties as a share of import value) are substantially lower on AI-related products than on other goods:
 
-| Relevance | 2024 Tariff (%) | 2025 Tariff (%) |
+| Relevance | 2024 Tariff (%) | Dec 2025 Tariff (%) |
 |---|---:|---:|
-| High AI Relevance | 1.8 | 4.7 |
-| Low AI Relevance | 2.7 | 9.4 |
+| High AI Relevance | 1.8 | 4.5 |
+| Low AI Relevance | 2.7 | 12.1 |
 
-By category in 2025: Compute Hardware faces just 1.1%, while Electrical Power (11.0%) and Cooling HVAC (11.3%) face higher rates. Networking Telecom is at 4.0%. While tariffs rose across the board in 2025, AI-related products remain relatively less protected.
+By category at the end of 2025: Compute Hardware faced just 0.8%, while Electrical Power (13.8%) and Cooling HVAC (15.8%) faced rates more than double the overall average for AI products. Networking Telecom was at 3.1%. While tariffs rose across the board in 2025, AI-related products remain relatively less protected.
 
 ### Why Are AI Tariffs Lower? Exemption List Analysis
 
@@ -168,20 +171,20 @@ The export side tells a complementary story --- U.S. exporters play an important
 | &nbsp;&nbsp;&nbsp;&nbsp;Building Structure | 28 | 3.0 | 2.8 | -6.8 |
 | &nbsp;&nbsp;&nbsp;&nbsp;Specialty Materials | 16 | 0.7 | 0.6 | -9.6 |
 | &nbsp;&nbsp;&nbsp;&nbsp;Fire Safety Security | 7 | 0.5 | 0.6 | +13.4 |
-| Low AI Relevance | 8,278 | 1,034.8 | 1,058.6 | +2.3 |
+| Low AI Relevance | 8,285 | 1,034.8 | 1,058.6 | +2.3 |
 | **Total Trade** | **9,269** | **1,551.9** | **1,648.4** | **+6.2** |
 
 AI-related exports grew 34.5% since 2023, led by Compute Hardware (+62.1%). While import growth is stronger (reflecting the U.S. as a net importer of AI products), the export side confirms that AI trade is not one-sided.
 
 ### Export Growth Index (2023 = 100)
 
-![U.S. Exports of AI and non-AI products](paper/figures/ai-exports-index.png)
+![U.S. Exports of AI and non-AI products](paper/published/figures/ai-exports-index.png)
 
 The export-side pattern mirrors the import side: AI-relevant exports have diverged sharply from non-AI exports since mid-2024.
 
 ### Top Export Destinations by Product Category
 
-![Export destinations by AI product category](paper/figures/ai-exports-by-country-category.png)
+![Export destinations by AI product category](paper/published/figures/ai-exports-by-country-category.png)
 
 Mexico is an important destination for AI-related products. This is suggestive that AI-related materials are coming into the U.S., exported to Mexico, and then back to the U.S. How much value added is provided in the U.S. stage is unclear. 
 
@@ -222,7 +225,7 @@ The actual U.S. goods trade deficit in 2025 was **$1,235 billion**. If AI-relate
 
 ---
 
-## Data and Code
+## 7. Data and Code
 
 All figures and tables are generated by the numbered Jupyter notebooks in the [`code/`](code/) folder:
 
@@ -237,4 +240,16 @@ All figures and tables are generated by the numbered Jupyter notebooks in the [`
 | 11 | Counterfactual trade balance |
 | 12 | Robustness checks |
 
-Trade data comes from the U.S. Census Bureau's international trade statistics. Classification uses the Claude API to evaluate each HS10 code's relevance to AI data center infrastructure.
+Trade data comes from the U.S. Census Bureau's international trade statistics, pulled into `data-input/` by `code/00-refresh-data-input.py` from a validated monthly build (see Section 8). Classification uses the Claude API to evaluate each HS10 code's relevance to AI data center infrastructure.
+
+---
+
+## 8. How This Repository Evolves
+
+The paper is finished; the data is not. Census releases a new month of trade data about five weeks after the month ends, revises the full history with every release, and introduces new HS10 codes each January and July. The repository handles this by keeping two versions of the analysis apart.
+
+- **The published version is frozen.** Everything in [paper/published/](paper/published/) (PDF, LaTeX source, figures, tables) is the article as it appeared in the *Quarterly Review*, and the same state is tagged `qr-published-2026-06` in git. Nothing in that folder is ever regenerated. This README describes that version.
+- **The working tree is the living version.** The notebooks in [code/](code/) pull the current Census vintage, regenerate every figure, table and macro in [paper/figures/](paper/figures/) and [paper/tables/](paper/tables/), and recompile [paper/ai-trade.pdf](paper/ai-trade.pdf). The monthly index series is written to [data-output/](data-output/). Each refresh is tagged `refresh-YYYY-MM` and logged in [REFRESH-LOG.md](REFRESH-LOG.md), including the headline changes relative to the published version.
+- **The classification is updated periodically.** HS10 codes that Census introduces after the paper was written are unclassified until they are run through the same LLM procedure. These updates are logged alongside the data refreshes.
+
+The procedure for a refresh, and the reasoning behind these rules, is in [UPDATE-PLAN.md](UPDATE-PLAN.md).
