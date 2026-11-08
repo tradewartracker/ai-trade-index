@@ -237,3 +237,6 @@ data-input/vintage-*/
 
 # Private notes, never published
 paper/JH-edits.md
+
+# Replication cuts of the data (built with 00-refresh-data-input.py --through)
+data-input/replicate-*/

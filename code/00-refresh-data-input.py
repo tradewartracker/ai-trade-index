@@ -4,11 +4,20 @@ Refresh data-input/ from the canonical trade-data repo (C:/heroku/trade-data).
 Run from anywhere:   python code/00-refresh-data-input.py
 Then run the paper pipeline (code/run-paper.ipynb, or notebooks 06 -> 11 in order).
 
+Replication cut:     python code/00-refresh-data-input.py --through 2026-03
+    Builds the same six files, truncated to months <= 2026-03, into
+    data-input/replicate-2026-03/ (or --out DIR). data-input/ itself is untouched and
+    nothing is stashed. Copy the files into the data-input/ of a worktree checked out
+    at the tag you want to replicate, then run the notebooks there. Census revisions
+    carried by the current upstream build are kept: this reproduces the published
+    numbers "up to revisions", not byte for byte.
+
 What it does
 ------------
 1. Moves the current data-input parquets into data-input/vintage-<YYYY-MM>/ where
    <YYYY-MM> is the last month in the current TOTALdata-current.parquet. Refuses to
    overwrite anything already in that folder (a failed run must not clobber a backup).
+   Skipped when writing to a folder other than data-input/.
 2. Imports: copies the legacy-schema products that trade-data already builds
    (data/products/tri-imports-hs10/: TOTAL + 30 countries + EU 0003 + USMCA 0020)
    into TOTALdata-current.parquet and ALL-data-current.parquet.
@@ -26,8 +35,10 @@ Legacy schema (all columns string, time as 'YYYY-MM'):
 pyarrow's strftime needs a timezone database that is missing on this Windows box, so the
 month string is built from year() and month() instead.
 """
+import argparse
 import glob
 import os
+import re
 import shutil
 import sys
 import time
@@ -53,12 +64,23 @@ IMPORT_FILES = ['TOTALdata-current.parquet', 'ALL-data-current.parquet']
 EXPORT_FILES = ['TOTALexports-combined.parquet', 'All-country-exports.parquet',
                 'TOTALexports-combined-DF.parquet', 'All-country-exports-DF.parquet']
 
+# Set in main(): where the six files are written, and the optional last month to keep.
+OUT = DI
+THROUGH = None
+
 
 def month_string(ts):
     """timestamp array -> 'YYYY-MM' string array without needing a tz database."""
     y = pc.cast(pc.year(ts), pa.string())
     m = pc.utf8_lpad(pc.cast(pc.month(ts), pa.string()), 2, '0')
     return pc.binary_join_element_wise(y, m, '-')
+
+
+def truncate(t, col='time'):
+    """Keep rows with month string <= THROUGH (no-op when THROUGH is None)."""
+    if THROUGH is None:
+        return t
+    return t.filter(pc.less_equal(t[col], THROUGH))
 
 
 def current_vintage_label():
@@ -89,16 +111,21 @@ def stash_current_files():
 
 def build_imports():
     t0 = time.time()
-    shutil.copy2(f'{IMPORT_PRODUCTS}/TOTALdata-current.parquet', os.path.join(DI, 'TOTALdata-current.parquet'))
+    tot_src = f'{IMPORT_PRODUCTS}/TOTALdata-current.parquet'
+    tot_dst = os.path.join(OUT, 'TOTALdata-current.parquet')
+    if THROUGH is None:
+        shutil.copy2(tot_src, tot_dst)
+    else:
+        pq.write_table(truncate(pq.read_table(tot_src)), tot_dst)
     cols = ['CTY_NAME', 'CON_VAL_MO', 'CAL_DUT_MO', 'I_COMMODITY', 'I_COMMODITY_SDESC', 'time', 'COMM_LVL', 'CTY_CODE']
     schema = pa.schema([(c, pa.string()) for c in cols])
     files = sorted(glob.glob(f'{IMPORT_PRODUCTS}/*data-current.parquet'))
     if len(files) != 33:
         sys.exit(f'expected 33 import product files, found {len(files)}')
-    w = pq.ParquetWriter(os.path.join(DI, 'ALL-data-current.parquet'), schema)
+    w = pq.ParquetWriter(os.path.join(OUT, 'ALL-data-current.parquet'), schema)
     n, maxdup, tmax = 0, 0, ''
     for f in files:
-        t = pq.read_table(f)
+        t = truncate(pq.read_table(f))
         if 'CTY_CODE' not in t.column_names:          # the TOTAL file carries no code
             t = t.append_column('CTY_CODE', pa.array(['TOTAL'] * t.num_rows, pa.string()))
         t = t.select(cols).cast(schema)
@@ -122,7 +149,7 @@ def build_exports():
         'TOTALexports-combined-DF.parquet': pa.schema([(c, pa.string()) for c in base + ['export_type']]),
         'All-country-exports-DF.parquet':   pa.schema([(c, pa.string()) for c in base + ['CTY_CODE', 'export_type']]),
     }
-    writers = {k: pq.ParquetWriter(os.path.join(DI, k), s) for k, s in schemas.items()}
+    writers = {k: pq.ParquetWriter(os.path.join(OUT, k), s) for k, s in schemas.items()}
     buf = {k: [] for k in writers}
     bufn = {k: 0 for k in writers}
     total = {k: 0 for k in writers}
@@ -150,13 +177,17 @@ def build_exports():
         if not b.num_rows:
             continue
         t = pa.Table.from_batches([b])
+        t = t.append_column('month', month_string(t['time']))
+        t = truncate(t, 'month')
+        if not t.num_rows:
+            continue
         out = pa.table({
             'CTY_NAME': t['cty_name'],
             'ALL_VAL_MO': pc.cast(t['value'], pa.string()),
             'E_COMMODITY': t['hs10'],
             'E_COMMODITY_SDESC': t['desc_short'],
             'COMM_LVL': t['comm_lvl'],
-            'time': month_string(t['time']),
+            'time': t['month'],
             'CTY_CODE': t['cty_code'],
             'export_type': pc.take(et_vals, pc.index_in(t['df'], value_set=et_keys)),
         })
@@ -172,7 +203,7 @@ def build_exports():
         writers[k].close()
     print(f'exports: {time.time()-t0:.0f}s; rows written: ' + ', '.join(f'{k} {v:,}' for k, v in total.items()))
 
-    tt = pq.read_table(os.path.join(DI, 'TOTALexports-combined.parquet'), columns=['time', 'E_COMMODITY'])
+    tt = pq.read_table(os.path.join(OUT, 'TOTALexports-combined.parquet'), columns=['time', 'E_COMMODITY'])
     g = tt.group_by(['time', 'E_COMMODITY']).aggregate([([], 'count_all')])
     maxdup = pc.max(g['count_all']).as_py()
     print(f'exports: TOTAL through {pc.max(tt["time"]).as_py()}, max duplicate key = {maxdup}')
@@ -180,11 +211,41 @@ def build_exports():
         sys.exit('duplicate (month, HS10) keys in TOTAL exports; aborting')
 
 
-if __name__ == '__main__':
+def main():
+    global OUT, THROUGH
+    ap = argparse.ArgumentParser(description=__doc__.split('\n\n')[0])
+    ap.add_argument('--through', metavar='YYYY-MM', help='keep only months <= this (replication cut)')
+    ap.add_argument('--out', metavar='DIR', help='write here instead of data-input/ '
+                    '(default with --through: data-input/replicate-<YYYY-MM>/)')
+    a = ap.parse_args()
+    if a.through is not None and not re.fullmatch(r'\d{4}-\d{2}', a.through):
+        sys.exit('--through must look like 2026-03')
+    THROUGH = a.through
+    if a.out:
+        OUT = os.path.abspath(a.out)
+    elif THROUGH:
+        OUT = os.path.join(DI, f'replicate-{THROUGH}')
+
     for p in (IMPORT_PRODUCTS, EXPORT_BASE):
         if not os.path.exists(p):
             sys.exit(f'missing upstream input: {p}')
-    stash_current_files()
+
+    if os.path.normcase(OUT) == os.path.normcase(DI):
+        stash_current_files()
+    else:
+        os.makedirs(OUT, exist_ok=True)
+        clash = [f for f in IMPORT_FILES + EXPORT_FILES if os.path.exists(os.path.join(OUT, f))]
+        if clash:
+            sys.exit(f'refusing to overwrite existing files in {OUT}: {clash}')
+        print(f'writing to {OUT}' + (f', months <= {THROUGH}' if THROUGH else ''))
+
     build_imports()
     build_exports()
-    print('done. Next: run code/run-paper.ipynb (notebooks 06 -> 11).')
+    if os.path.normcase(OUT) == os.path.normcase(DI):
+        print('done. Next: run code/run-paper.ipynb (notebooks 06 -> 11).')
+    else:
+        print(f'done. Copy the six parquets from {OUT} into the data-input/ of the worktree you want to run.')
+
+
+if __name__ == '__main__':
+    main()
