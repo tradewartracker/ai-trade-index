@@ -230,3 +230,7 @@ data-input/*.parquet
 
 # Superseded data vintages kept locally
 data-input/vintage-*/
+
+# Backups and LaTeX lock files
+*.bak
+*.synctex(busy)

@@ -96,6 +96,8 @@ Full methodology: [HS10_CLASSIFIER_DOCUMENTATION.md](HS10_CLASSIFIER_DOCUMENTATI
 
 ## Running the Analysis
 
+Refreshing the trade data is a separate, scripted step: `python code/00-refresh-data-input.py` pulls the current vintage from the canonical `C:/heroku/trade-data` repo into `data-input/` and stashes the previous one. Every refresh is logged in [REFRESH-LOG.md](REFRESH-LOG.md); the procedure and the rules for chart windows, anchors, and classification upkeep are in [UPDATE-PLAN.md](UPDATE-PLAN.md).
+
 **Reproduce from existing classifications (no API key needed):**
 
 ```bash
@@ -117,7 +119,7 @@ export ANTHROPIC_API_KEY="your-key-here"
 
 - **U.S. Census Bureau**: International Trade data via API (`api.census.gov/data/timeseries/intltrade/imports/`)
 - **Tariff exemption lists**: Executive Order 14257 (Consumer Electronics, Annex II) and Section 122 Surcharge
-- Trade data covers monthly flows from January 2013 through January 2026
+- Trade data covers monthly flows from January 2013 through the month recorded in REFRESH-LOG.md (July 2026 as of 2026-09-14)
 
 ## HS2 Exclusions
 
