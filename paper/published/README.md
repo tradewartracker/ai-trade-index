@@ -17,6 +17,3 @@ The same state is tagged in git as `qr-published-2026-06`.
 
 How to regenerate these outputs from the tagged code and a dated data cut, and how close
 to expect the result to be: [REPLICATION.md](../../REPLICATION.md).
-
-How to regenerate these outputs from the tagged code and a dated data cut, and how close
-to expect the result to be: [REPLICATION.md](../../REPLICATION.md).
