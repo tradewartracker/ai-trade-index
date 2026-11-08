@@ -234,3 +234,6 @@ data-input/vintage-*/
 # Backups and LaTeX lock files
 *.bak
 *.synctex(busy)
+
+# Private notes, never published
+paper/JH-edits.md
