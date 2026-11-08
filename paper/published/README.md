@@ -14,3 +14,9 @@ July 2026). At that moment the working-tree `ai-trade.tex` and
 The live pipeline (notebooks 06 to 11) overwrites `paper/figures/` and
 `paper/tables/` in place. Nothing in this directory is written by the pipeline.
 The same state is tagged in git as `qr-published-2026-06`.
+
+How to regenerate these outputs from the tagged code and a dated data cut, and how close
+to expect the result to be: [REPLICATION.md](../../REPLICATION.md).
+
+How to regenerate these outputs from the tagged code and a dated data cut, and how close
+to expect the result to be: [REPLICATION.md](../../REPLICATION.md).

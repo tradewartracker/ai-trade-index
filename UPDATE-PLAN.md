@@ -102,7 +102,7 @@ so August 2026 arrives in early October.
 | 1 | `python code/00-refresh-data-input.py` | Prints row counts, last month, max duplicate key = 1; previous vintage stashed |
 | 2 | Unclassified-code check (section 4) | Decide: classify now, or log the share and move on |
 | 3 | Run `code/run-paper.ipynb` (notebooks 06 to 11) | All six exit cleanly; `ai-trade-results.tex` has no duplicate macro names |
-| 4 | Diff `paper/tables/ai-trade-results.tex` against `git HEAD` | Latest-month macros should move; historical macros should move by about 1% or less. Anything larger is a revision worth a sentence in the log, or a bug |
+| 4 | Diff `paper/tables/ai-trade-results.tex` against `git HEAD` (`code/compare-macros.py`) | Latest-month macros should move; historical macros should move by about 1% or less. Anything larger is a revision worth a sentence in the log, or a bug |
 | 5 | Look at the key figures | `ai-trade-index`, `ai-tariffs`, `ai-by-country`, `ai-exports-index`, `ai-exports-by-country-category`: nothing clipped, labels show the new month |
 | 6 | Recompile the paper and any live deck, twice | Clean logs, page counts unchanged |
 | 7 | Add an entry to `REFRESH-LOG.md`; commit `refresh: data through YYYY-MM`; tag `refresh-YYYY-MM` | |
@@ -126,6 +126,9 @@ three tiers that need different handling:
    (`\aiShareTwentyFive`) with role-named ones (`\aiShareLatestFullYear`) and let the prose
    say "in \latestFullYear". Until then the year-named macros keep their published meaning,
    which is what today's tariff change preserved by adding a bar instead of replacing one.
+   The four Mexico category-share macros in notebook 10 slipped through: from September to
+   November 2026 they followed the chart's rolling two-year window. Since 2026-11-08 they are
+   pinned to the published 2024-2025 window and `...Latest` variants carry the rolling window.
 2. **Anchored statements** ("in December 2025 the effective rate was...") stay true as
    written because their anchors are fixed. Add the latest month next to them rather than
    overwriting.
@@ -167,7 +170,11 @@ the top and update it only at annual reviews.
 5. Convert notebooks 06 and 11 to role-based years; add role-named macros alongside the
    year-named ones.
 6. The claims checklist for section 6, kept in this file.
-7. `README.md` numbers regenerated or banner-dated.
+7. `README.md` numbers regenerated or banner-dated. Done 2026-11-08: banner-dated, describes
+   the published version.
+8. `REPLICATION.md`, the `--through` cut in `00-refresh-data-input.py`, and
+   `code/compare-macros.py` / `code/compare-figures.py`. Done 2026-11-08; see REPLICATION.md
+   section 5 for what the check found.
 
 ---
 

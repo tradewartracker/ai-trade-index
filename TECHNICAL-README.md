@@ -36,9 +36,11 @@ ai-trade-index/
 │   │   ├── trade_hierarchical_exports.tex
 │   │   ├── counterfactual_summary.tex
 │   │   └── ...
-│   └── figures/                       # Generated figures (PNG + PDF)
+│   ├── figures/                       # Generated figures (PNG + PDF)
+│   └── published/                     # The article as published, frozen (never written by the pipeline)
 │
 ├── code/                              # Notebooks and classifier modules
+│   ├── 00-refresh-data-input.py       # Pull the current data vintage, or a dated cut, into data-input/
 │   ├── 01-make-hs10-list.ipynb        # Extract unique HS10 codes
 │   ├── 02-make-naics-descriptions.ipynb
 │   ├── 03-make-imports-dataset.ipynb
@@ -51,11 +53,17 @@ ai-trade-index/
 │   ├── 10-section3-exports.ipynb
 │   ├── 11-counterfactual.ipynb
 │   ├── 12-robustness.ipynb
+│   ├── run-paper.ipynb                # Runs notebooks 06 to 11 in order
+│   ├── compare-macros.py              # Diff two macro files (replication and refresh checks)
+│   ├── compare-figures.py             # Pixel-diff two figure folders, side-by-side composites
 │   ├── hs10_llm_classifier_naics.py   # LLM classifier module (with NAICS context)
 │   ├── hs10_llm_classifier_demo.py    # LLM classifier module (basic)
 │   └── hs10_datacenter_classifier.py  # Rule-based classifier (legacy)
 │
 ├── README.md                          # Results walkthrough with figures and tables
+├── REPLICATION.md                     # How to reproduce the published version, and how close to expect
+├── UPDATE-PLAN.md                     # How the living version is kept current
+├── REFRESH-LOG.md                     # One entry per data refresh
 ├── HS10_CLASSIFIER_DOCUMENTATION.md   # LLM classification methodology
 ├── AI_TRADE_HIGH_RELEVANCE_PRODUCTS.md # Full listing of high-relevance products
 │
@@ -96,24 +104,21 @@ Full methodology: [HS10_CLASSIFIER_DOCUMENTATION.md](HS10_CLASSIFIER_DOCUMENTATI
 
 ## Running the Analysis
 
-Refreshing the trade data is a separate, scripted step: `python code/00-refresh-data-input.py` pulls the current vintage from the canonical `C:/heroku/trade-data` repo into `data-input/` and stashes the previous one. Every refresh is logged in [REFRESH-LOG.md](REFRESH-LOG.md); the procedure and the rules for chart windows, anchors, and classification upkeep are in [UPDATE-PLAN.md](UPDATE-PLAN.md).
+The repository holds two versions of the analysis (README, section 8): the published version, frozen at git tag `qr-published-2026-06` and copied to `paper/published/`, and the living version in the working tree, which follows the current Census vintage.
 
-**Reproduce from existing classifications (no API key needed):**
+**Reproduce the published version.** Follow [REPLICATION.md](REPLICATION.md): build a data cut ending March 2026 with `python code/00-refresh-data-input.py --through 2026-03`, run the tagged notebooks in a separate git worktree, and compare with `paper/published/` using `code/compare-macros.py` and `code/compare-figures.py`. The figures replicate; the numbers replicate up to Census revisions of the trade history.
 
-```bash
-# Run notebooks 06-12 in the code/ folder
-# Each notebook reads from ../data-input/ and writes to ../paper/tables/ and ../paper/figures/
-```
+**Refresh the living version.** Refreshing the trade data is a separate, scripted step: `python code/00-refresh-data-input.py` pulls the current vintage from the canonical `C:/heroku/trade-data` repo into `data-input/` and stashes the previous one. Then run `code/run-paper.ipynb`, which executes notebooks 06 to 11 in order (06 initializes `paper/tables/ai-trade-results.tex`, 07 to 11 append to it). Set `PYTHONUTF8=1` first on Windows. Every refresh is logged in [REFRESH-LOG.md](REFRESH-LOG.md); the procedure and the rules for chart windows, anchors, and classification upkeep are in [UPDATE-PLAN.md](UPDATE-PLAN.md). Notebook 12 is an optional robustness check and reads earlier classification files that are not in the repository.
 
-**Reproduce from scratch (requires Anthropic API key):**
+**Rebuild the classification (requires an Anthropic API key):**
 
 ```bash
-# Set API key
 export ANTHROPIC_API_KEY="your-key-here"
-
-# Run notebooks 01-12 in the code/ folder
-# Notebooks 04-05 will call the Claude API (~$150 total, several hours)
+# Run notebooks 01-05 in the code/ folder, then 06-11
+# Notebooks 04-05 call the Claude API (~$150 total, several hours)
 ```
+
+The result will not match the committed classification files exactly, since the classifier's output varies from run to run. The committed files are the inputs the paper used, and every result in the paper is conditional on them.
 
 ## Data Sources
 
